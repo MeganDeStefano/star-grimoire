@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Grimoire des compétences — STAR</title>
+
+    <link rel="stylesheet" href="css/grimoire.css">
+
+</head>
+
+<body>
+
+<header>
+    <h1>Grimoire des compétences</h1>
+    <p>STAR — Créateur de compétences</p>
+</header>
+
+<!-- ONGLETS -->
+
+<nav class="magic-tabs" id="magicTabs"></nav>
+
+<!-- PAGE SPECIALE NOVICE -->
+
+<div id="novicePage" class="novice-page">
+
+    <div class="novice-character-info">
+
+        <div>
+            Niveau du personnage
+            <strong>50</strong>
+        </div>
+
+        <div>
+            Points disponibles
+            <strong id="availablePoints">5</strong>
+            <span class="points-rule">1 point tous les 10 niveaux</span>
+        </div>
+
+    </div>
+
+    <section class="novice-section">
+
+        <div class="section-title">
+            Compétences actives
+        </div>
+
+        <div class="novice-skills">
+
+            <!-- TÉLÉPORTATION -->
+
+            <div class="novice-skill">
+
+                <div class="novice-icon">🏃</div>
+                <div class="novice-name">Téléportation</div>
+                <div class="novice-status">Débloquée</div>
+
+                <div class="tooltip">
+                    <strong>Téléportation</strong>
+                    Permet au personnage de se téléporter rapidement sur une courte distance.
+                    Description provisoire.
+                </div>
+
+            </div>
+
+
+            <!-- INTERRUPTION -->
+
+            <div class="novice-skill">
+
+                <div class="novice-icon">✋</div>
+                <div class="novice-name">Interruption</div>
+                <div class="novice-status">Débloquée</div>
+
+                <div class="tooltip">
+                    <strong>Interruption</strong>
+                    Interrompt l'incantation en cours d'un ennemi.
+                    Description provisoire.
+                </div>
+
+            </div>
+
+            <!-- IMMOBILISATION -->
+
+            <div class="novice-skill">
+
+                <div class="novice-icon">🌀</div>
+                <div class="novice-name">Immobilisation</div>
+                <div class="novice-status">Débloquée</div>
+
+                <div class="tooltip">
+                    <strong>Immobilisation</strong>
+                    Immobilise la cible pendant X secondes.
+                    Description provisoire.
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="novice-section">
+
+        <div class="section-title">
+            Passifs
+        </div>
+
+        <div class="affinity-area">
+
+            <div class="affinity-grid">
+
+                <div class="affinity">
+                    <div class="affinity-icon">🔥</div>
+                    <div class="affinity-name">IGNIS</div>
+                    <div class="affinity-value">
+                        <button onclick="changeAffinity('IGNIS', -1)">−</button>
+                        <span id="affinity-IGNIS">0 / 1</span>
+                        <button onclick="changeAffinity('IGNIS', 1)">+</button>
+                    </div>
+
+                    <div class="tooltip">
+                        <strong>Affinité IGNIS</strong>
+                        +10 Affinité IGNIS.
+                    </div>
+
+                </div>
+
+                <div class="affinity">
+                    <div class="affinity-icon">💧</div>
+                    <div class="affinity-name">AQUA</div>
+                    <div class="affinity-value">
+                        <button onclick="changeAffinity('AQUA', -1)">−</button>
+                        <span id="affinity-AQUA">0 / 1</span>
+                        <button onclick="changeAffinity('AQUA', 1)">+</button>
+                    </div>
+
+                    <div class="tooltip">
+                        <strong>Affinité AQUA</strong>
+                        +10 Affinité AQUA.
+                    </div>
+
+                </div>
+
+                <div class="affinity">
+                    <div class="affinity-icon">⛰️</div>
+                    <div class="affinity-name">TERRA</div>
+                    <div class="affinity-value">
+                        <button onclick="changeAffinity('TERRA', -1)">−</button>
+                        <span id="affinity-TERRA">0 / 1</span>
+                        <button onclick="changeAffinity('TERRA', 1)">+</button>
+                    </div>
+                    
+                    <div class="tooltip">
+                        <strong>Affinité TERRA</strong>
+                        +10 Affinité TERRA.
+                    </div>
+
+                </div>
+
+                <div class="affinity">
+                    <div class="affinity-icon">🌪️</div>
+                    <div class="affinity-name">AER</div>
+                    <div class="affinity-value">
+                        <button onclick="changeAffinity('AER', -1)">−</button>
+                        <span id="affinity-AER">0 / 1</span>
+                        <button onclick="changeAffinity('AER', 1)">+</button>
+                    </div>
+                    
+                    <div class="tooltip">
+                        <strong>Affinité AER</strong>
+                        +10 Affinité AER.
+                    </div>
+
+                </div>
+
+                <div class="affinity">
+                    <div class="affinity-icon">☀️</div>
+                    <div class="affinity-name">LUX</div>
+                    <div class="affinity-value">
+                        <button onclick="changeAffinity('LUX', -1)">−</button>
+                        <span id="affinity-LUX">0 / 1</span>
+                        <button onclick="changeAffinity('LUX', 1)">+</button>
+                    </div>
+                    
+                    <div class="tooltip">
+                        <strong>Affinité LUX</strong>
+                        +10 Affinité LUX.
+                    </div>
+
+                </div>
+
+                <div class="affinity">
+                    <div class="affinity-icon">🌒</div>
+                    <div class="affinity-name">UMBRA</div>
+                    <div class="affinity-value">
+                        <button onclick="changeAffinity('UMBRA', -1)">−</button>
+                        <span id="affinity-UMBRA">0 / 1</span>
+                        <button onclick="changeAffinity('UMBRA', 1)">+</button>
+                    </div>
+                    
+                    <div class="tooltip">
+                        <strong>Affinité UMBRA</strong>
+                        +10 Affinité UMBRA.
+                    </div>
+
+                </div>
+
+                <div class="affinity">
+                    <div class="affinity-icon">🌿</div>
+                    <div class="affinity-name">VITA</div>
+                    <div class="affinity-value">
+                        <button onclick="changeAffinity('VITA', -1)">−</button>
+                        <span id="affinity-VITA">0 / 1</span>
+                        <button onclick="changeAffinity('VITA', 1)">+</button>
+                    </div>
+                    
+                    <div class="tooltip">
+                        <strong>Affinité VITA</strong>
+                        +10 Affinité VITA.
+                    </div>
+
+                </div>
+
+                <div class="affinity">
+                    <div class="affinity-icon">💀</div>
+                    <div class="affinity-name">MORS</div>
+                    <div class="affinity-value">
+                        <button onclick="changeAffinity('MORS', -1)">−</button>
+                        <span id="affinity-MORS">0 / 1</span>
+                        <button onclick="changeAffinity('MORS', 1)">+</button>
+                    </div>
+                    
+                    <div class="tooltip">
+                        <strong>Affinité MORS</strong>
+                        +10 Affinité MORS.
+                    </div>
+
+                </div>
+
+                                <div class="affinity">
+                    <div class="affinity-icon">🛡️</div>
+                    <div class="affinity-name">Posture défensive</div>
+
+                    <div class="affinity-value">
+                        <button onclick="changeTankPosture(-1)">−</button>
+                        <span id="tank-posture">0 / 1</span>
+                        <button onclick="changeTankPosture(1)">+</button>
+                    </div>
+
+                    <div class="tooltip">
+                        <strong>Posture défensive</strong>
+                        Dégâts subis : -80%.
+                        Dégâts infligés : -80%.
+                        Soins et boucliers prodigués aux autres : -80%.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="reset-warning">
+
+                ⚠️ <strong>Simulation libre :</strong>
+                les points d'affinité peuvent être ajoutés et retirés librement dans ce Grimoire.
+                En jeu, la réinitialisation des points investis sera plus contraignante.
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <aside class="novice-summary">
+
+        <div class="result-title-small">
+            Passifs actifs
+        </div>
+
+        <div id="activePassives">
+
+            <div class="empty-passives">
+                Aucun passif élémentaire actif.
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+<div class="grimoire" id="magicBuilder">
+
+    <!-- CONSTRUCTION -->
+
+    <main class="builder">
+
+        <section>
+            <div class="section-title">
+                I — Module principal
+            </div>
+
+            <div class="module-grid" id="primaryModules"></div>
+        </section>
+
+        <section class="secondary-section">
+
+            <div class="section-title">
+                II — Module secondaire · Facultatif
+            </div>
+
+            <div class="module-grid" id="secondaryModules"></div>
+
+        </section>
+
+	<section class="range-section">
+
+    	    <div class="section-title">
+                III — Portée
+    	    </div>
+
+    	    <div class="range-options">
+
+            	<div class="range-option" id="rangeMelee" onclick="selectRange('melee')">
+
+            		<div class="range-icon">👊</div>
+            		<div class="range-name">Corps à corps</div>
+            		<div class="range-detail">0 m · +10%</div>
+
+            		<div class="tooltip">
+                	    <strong>Corps à corps</strong>
+                	    Portée de 0 m. Les dégâts de la compétence sont augmentés de 10%.
+            		</div>
+
+        	    </div>
+
+        	<div class="range-option" id="rangeDistance" onclick="selectRange('distance')">
+
+            		<div class="range-icon">🎯</div>
+            		<div class="range-name">Distance</div>
+            		<div class="range-detail">10 m</div>
+
+            		<div class="tooltip">
+                	    <strong>Distance</strong>
+                	    Permet d'utiliser la compétence jusqu'à 10 mètres.
+            		</div>
+
+        	</div>
+
+    	    </div>
+
+</section>
+
+    </main>
+
+    <!-- RESULTAT -->
+
+    <aside class="result-panel">
+
+        <div class="result-title-small">
+            Compétence créée
+        </div>
+
+        <div id="spellResult">
+
+            <div class="empty-result">
+                Sélectionnez un module principal pour commencer la création d'une compétence.
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/grimoire.js"></script>
+
+</body>
+</html>
