@@ -658,7 +658,7 @@ function generateEffectLine(module, stats) {
 
         case "combat-buff":
             label = "Buff";
-            value = `${element} +${stats.effect}%`;
+            value = `${element} +${stats.effect}% · ${stats.duration}s`;
             break;
 
         case "debuff":
