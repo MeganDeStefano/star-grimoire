@@ -55,7 +55,12 @@ function updateActivePassives() {
                 <div class="active-passive-row">
 
                     <span class="active-passive-name element-${element}">
-                        ${magicIcons[element]} Affinité ${element}
+                        <img
+                            src="${magicIcons[element]}"
+                            alt="${element}"
+                            class="active-passive-icon"
+                        > 
+                        Affinité ${element}
                     </span>
 
                     <span class="active-passive-value">
@@ -216,7 +221,14 @@ function renderMagicTabs() {
             "magic-tab" +
             (magic === currentMagic ? " active" : "");
 
-        button.textContent = `${magicIcons[magic]} ${magic}`;
+        if (magic === "NOVICE") {
+            button.textContent = `⚔️ ${magic}`;
+        } else {
+            button.innerHTML = `
+                <img src="${magicIcons[magic]}" alt="${magic}">
+                <span>${magic}</span>
+            `;
+        }
 
         button.onclick = () => {
 
@@ -293,7 +305,9 @@ function createModuleElement(module, type) {
     element.innerHTML = `
 
         <div class="module-icon">
-            ${module.icon}
+            ${typeof module.icon === "object"
+                ? `<img src="${module.icon[currentMagic]}" alt="${module.latin}">`
+                : module.icon}
         </div>
 
         <div class="module-rank">
@@ -457,12 +471,9 @@ function generateSpellName() {
         name += " " + selectedSecondary.latin;
     }
 
-    name += " " + magicIcons[currentMagic];
-
     return name;
 
 }
-
 
 /* ========================================== PORTEE =========================================== */
 
@@ -590,10 +601,13 @@ function generateEffectLine(module, stats) {
         displayedPower = Math.round(displayedPower * 10) / 10;
     }
 
-    const element =
-        `<span style="color: ${magicColors[currentMagic]}">
-            ${magicIcons[currentMagic]}
-        </span>`;
+    const element = `
+        <img
+            src="${magicIcons[currentMagic]}"
+            alt="${currentMagic}"
+            class="element-icon-inline"
+        >
+    `;
 
     let label = module.name;
     let value = "";
@@ -890,7 +904,19 @@ function updateResult() {
         <div class="spell-main">
 
             <div class="spell-icon">
-                ${selectedPrimary.icon}
+                <div class="spell-icon-primary">
+                    ${typeof selectedPrimary.icon === "object"
+                        ? `<img src="${selectedPrimary.icon[currentMagic]}" alt="${selectedPrimary.latin}">`
+                        : selectedPrimary.icon}
+                </div>
+
+                ${selectedSecondary ? `
+                    <div class="spell-icon-secondary">
+                        ${typeof selectedSecondary.icon === "object"
+                            ? `<img src="${selectedSecondary.icon[currentMagic]}" alt="${selectedSecondary.latin}">`
+                            : selectedSecondary.icon}
+                    </div>
+                ` : ""}
             </div>
 
             <div class="spell-description">
