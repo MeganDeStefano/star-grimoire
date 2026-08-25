@@ -13,15 +13,15 @@ const magics = [
 ];
 
 const magicIcons = {
-    NOVICE: "⚔️",
-    IGNIS: "🔥",
-    AQUA: "💧",
-    TERRA: "⛰️",
-    AER: "🌪️",
-    LUX: "☀️",
-    UMBRA: "🌒",
-    VITA: "🌿",
-    MORS: "💀"
+    NOVICE: null,
+    IGNIS: "images/elements/ignis.png",
+    AQUA: "images/elements/aqua.png",
+    TERRA: "images/elements/terra.png",
+    AER: "images/elements/aer.png",
+    LUX: "images/elements/lux.png",
+    UMBRA: "images/elements/umbra.png",
+    VITA: "images/elements/vita.png",
+    MORS: "images/elements/mors.png"
 };
 
 const magicColors = {
@@ -47,7 +47,16 @@ const primaryModules = [
     id: "damage-single",
     name: "Dégâts monocible",
     latin: "Percute",
-    icon: "⚔️",
+    icon: {
+        IGNIS: "images/sigils/ignis-percute.png",
+        AQUA: "images/sigils/aqua-percute.png",
+        TERRA: "images/sigils/terra-percute.png",
+        AER: "images/sigils/aer-percute.png",
+        LUX: "images/sigils/lux-percute.png",
+        UMBRA: "images/sigils/umbra-percute.png",
+        VITA: "images/sigils/vita-percute.png",
+        MORS: "images/sigils/mors-percute.png"
+    },
     description: "Inflige des dégâts à une cible unique.",
     compatible: [
         "damage-single",
@@ -135,7 +144,16 @@ const primaryModules = [
     id: "damage-area",
     name: "Dégâts de zone",
     latin: "Explode",
-    icon: "💥",
+    icon: {
+        IGNIS: "images/sigils/ignis-explode.png",
+        AQUA: "images/sigils/aqua-explode.png",
+        TERRA: "images/sigils/terra-explode.png",
+        AER: "images/sigils/aer-explode.png",
+        LUX: "images/sigils/lux-explode.png",
+        UMBRA: "images/sigils/umbra-explode.png",
+        VITA: "images/sigils/vita-explode.png",
+        MORS: "images/sigils/mors-explode.png"
+    },
     description: "Inflige des dégâts aux cibles présentes dans une zone.",
     compatible: [
         "damage-single",
@@ -231,7 +249,16 @@ const primaryModules = [
     id: "damage-dot",
     name: "Dégâts sur la durée",
     latin: "Dole",
-    icon: "☠️",
+    icon: {
+        IGNIS: "images/sigils/ignis-dole.png",
+        AQUA: "images/sigils/aqua-dole.png",
+        TERRA: "images/sigils/terra-dole.png",
+        AER: "images/sigils/aer-dole.png",
+        LUX: "images/sigils/lux-dole.png",
+        UMBRA: "images/sigils/umbra-dole.png",
+        VITA: "images/sigils/vita-dole.png",
+        MORS: "images/sigils/mors-dole.png"
+    },
     description: "Inflige des dégâts progressivement pendant une durée déterminée.",
     compatible: [
         "damage-single",
@@ -335,7 +362,16 @@ const primaryModules = [
     id: "damage-dot-area",
     name: "Dégâts de zone sur la durée",
     latin: "Vexa",
-    icon: "🩻",
+    icon: {
+        IGNIS: "images/sigils/ignis-vexa.png",
+        AQUA: "images/sigils/aqua-vexa.png",
+        TERRA: "images/sigils/terra-vexa.png",
+        AER: "images/sigils/aer-vexa.png",
+        LUX: "images/sigils/lux-vexa.png",
+        UMBRA: "images/sigils/umbra-vexa.png",
+        VITA: "images/sigils/vita-vexa.png",
+        MORS: "images/sigils/mors-vexa.png"
+    },
     description: "Inflige des dégâts progressivement aux ennemis dans une zone.",
     compatible: [
         "damage-single",
@@ -447,7 +483,16 @@ const primaryModules = [
     id: "heal-single",
     name: "Soins monocible",
     latin: "Sana",
-    icon: "❤️",
+    icon: {
+        IGNIS: "images/sigils/ignis-sana.png",
+        AQUA: "images/sigils/aqua-sana.png",
+        TERRA: "images/sigils/terra-sana.png",
+        AER: "images/sigils/aer-sana.png",
+        LUX: "images/sigils/lux-sana.png",
+        UMBRA: "images/sigils/umbra-sana.png",
+        VITA: "images/sigils/vita-sana.png",
+        MORS: "images/sigils/mors-sana.png"
+    },
     description: "Rend des points de vie à une cible unique.",
     compatible: [
         "heal-single",
@@ -530,7 +575,16 @@ const primaryModules = [
     id: "heal-group",
     name: "Soins de groupe",
     latin: "Salva",
-    icon: "💕",
+    icon: {
+        IGNIS: "images/sigils/ignis-salva.png",
+        AQUA: "images/sigils/aqua-salva.png",
+        TERRA: "images/sigils/terra-salva.png",
+        AER: "images/sigils/aer-salva.png",
+        LUX: "images/sigils/lux-salva.png",
+        UMBRA: "images/sigils/umbra-salva.png",
+        VITA: "images/sigils/vita-salva.png",
+        MORS: "images/sigils/mors-salva.png"
+    },
     description: "Rend des points de vie à plusieurs cibles.",
     compatible: [
         "heal-single",
@@ -621,7 +675,16 @@ const primaryModules = [
     id: "heal-hot",
     name: "Soins sur la durée",
     latin: "Cura",
-    icon: "💚",
+    icon: {
+        IGNIS: "images/sigils/ignis-cura.png",
+        AQUA: "images/sigils/aqua-cura.png",
+        TERRA: "images/sigils/terra-cura.png",
+        AER: "images/sigils/aer-cura.png",
+        LUX: "images/sigils/lux-cura.png",
+        UMBRA: "images/sigils/umbra-cura.png",
+        VITA: "images/sigils/vita-cura.png",
+        MORS: "images/sigils/mors-cura.png"
+    },
     description: "Rend progressivement des points de vie pendant une durée déterminée.",
     compatible: [
         "heal-single",
@@ -720,7 +783,16 @@ const primaryModules = [
     id: "heal-hot-area",
     name: "Soins de groupe sur la durée",
     latin: "Recrea",
-    icon: "💟",
+    icon: {
+        IGNIS: "images/sigils/ignis-recrea.png",
+        AQUA: "images/sigils/aqua-recrea.png",
+        TERRA: "images/sigils/terra-recrea.png",
+        AER: "images/sigils/aer-recrea.png",
+        LUX: "images/sigils/lux-recrea.png",
+        UMBRA: "images/sigils/umbra-recrea.png",
+        VITA: "images/sigils/vita-recrea.png",
+        MORS: "images/sigils/mors-recrea.png"
+    },
     description: "Soigne progressivement les alliés dans une zone.",
     compatible: [
         "heal-single",
@@ -827,7 +899,16 @@ const primaryModules = [
     id: "shield",
     name: "Bouclier",
     latin: "Protege",
-    icon: "🛡️",
+    icon: {
+        IGNIS: "images/sigils/ignis-protege.png",
+        AQUA: "images/sigils/aqua-protege.png",
+        TERRA: "images/sigils/terra-protege.png",
+        AER: "images/sigils/aer-protege.png",
+        LUX: "images/sigils/lux-protege.png",
+        UMBRA: "images/sigils/umbra-protege.png",
+        VITA: "images/sigils/vita-protege.png",
+        MORS: "images/sigils/mors-protege.png"
+    },
     description: "Applique un bouclier absorbant des dégâts.",
     compatible: [
         "heal-single",
@@ -918,7 +999,16 @@ const primaryModules = [
     id: "shield-area",
     name: "Bouclier de groupe",
     latin: "Munire",
-    icon: "☂️",
+    icon: {
+        IGNIS: "images/sigils/ignis-munire.png",
+        AQUA: "images/sigils/aqua-munire.png",
+        TERRA: "images/sigils/terra-munire.png",
+        AER: "images/sigils/aer-munire.png",
+        LUX: "images/sigils/lux-munire.png",
+        UMBRA: "images/sigils/umbra-munire.png",
+        VITA: "images/sigils/vita-munire.png",
+        MORS: "images/sigils/mors-munire.png"
+    },
     description: "Applique un bouclier aux alliés présents dans une zone.",
     compatible: [
         "heal-single",
@@ -1017,7 +1107,16 @@ const primaryModules = [
     id: "combat-buff",
     name: "Buff de combat",
     latin: "Bonus",
-    icon: "⬆️",
+    icon: {
+        IGNIS: "images/sigils/ignis-bonus.png",
+        AQUA: "images/sigils/aqua-bonus.png",
+        TERRA: "images/sigils/terra-bonus.png",
+        AER: "images/sigils/aer-bonus.png",
+        LUX: "images/sigils/lux-bonus.png",
+        UMBRA: "images/sigils/umbra-bonus.png",
+        VITA: "images/sigils/vita-bonus.png",
+        MORS: "images/sigils/mors-bonus.png"
+    },
     description: "Applique une amélioration temporaire au personnage.",
     compatible: [
         "heal-single",
@@ -1100,7 +1199,16 @@ const primaryModules = [
     id: "debuff",
     name: "Débuff",
     latin: "Malus",
-    icon: "⬇️",
+    icon: {
+        IGNIS: "images/sigils/ignis-malus.png",
+        AQUA: "images/sigils/aqua-malus.png",
+        TERRA: "images/sigils/terra-malus.png",
+        AER: "images/sigils/aer-malus.png",
+        LUX: "images/sigils/lux-malus.png",
+        UMBRA: "images/sigils/umbra-malus.png",
+        VITA: "images/sigils/vita-malus.png",
+        MORS: "images/sigils/mors-malus.png"
+    },
     description: "Applique un affaiblissement temporaire à la cible.",
     compatible: [
         "damage-single",
@@ -1194,7 +1302,16 @@ const secondaryModules = [
     id: "damage-single",
     name: "Dégâts monocible",
     latin: "Percute",
-    icon: "⚔️",
+    icon: {
+        IGNIS: "images/sigils/ignis-percute.png",
+        AQUA: "images/sigils/aqua-percute.png",
+        TERRA: "images/sigils/terra-percute.png",
+        AER: "images/sigils/aer-percute.png",
+        LUX: "images/sigils/lux-percute.png",
+        UMBRA: "images/sigils/umbra-percute.png",
+        VITA: "images/sigils/vita-percute.png",
+        MORS: "images/sigils/mors-percute.png"
+    },
     description: "Ajoute des dégâts monocible à la compétence.",
 
     stats: {
@@ -1268,7 +1385,16 @@ const secondaryModules = [
     id: "damage-area",
     name: "Dégâts de zone",
     latin: "Explode",
-    icon: "💥",
+    icon: {
+        IGNIS: "images/sigils/ignis-explode.png",
+        AQUA: "images/sigils/aqua-explode.png",
+        TERRA: "images/sigils/terra-explode.png",
+        AER: "images/sigils/aer-explode.png",
+        LUX: "images/sigils/lux-explode.png",
+        UMBRA: "images/sigils/umbra-explode.png",
+        VITA: "images/sigils/vita-explode.png",
+        MORS: "images/sigils/mors-explode.png"
+    },
     description: "Ajoute des dégâts de zone à la compétence.",
 
     stats: {
@@ -1350,7 +1476,16 @@ const secondaryModules = [
     id: "damage-dot",
     name: "Dégâts sur la durée",
     latin: "Dole",
-    icon: "☠️",
+    icon: {
+        IGNIS: "images/sigils/ignis-dole.png",
+        AQUA: "images/sigils/aqua-dole.png",
+        TERRA: "images/sigils/terra-dole.png",
+        AER: "images/sigils/aer-dole.png",
+        LUX: "images/sigils/lux-dole.png",
+        UMBRA: "images/sigils/umbra-dole.png",
+        VITA: "images/sigils/vita-dole.png",
+        MORS: "images/sigils/mors-dole.png"
+    },
     description: "Ajoute des dégâts périodiques à la compétence.",
 
     stats: {
@@ -1440,7 +1575,16 @@ const secondaryModules = [
     id: "damage-dot-area",
     name: "Dégâts de zone sur la durée",
     latin: "Vexa",
-    icon: "🩻",
+    icon: {
+        IGNIS: "images/sigils/ignis-vexa.png",
+        AQUA: "images/sigils/aqua-vexa.png",
+        TERRA: "images/sigils/terra-vexa.png",
+        AER: "images/sigils/aer-vexa.png",
+        LUX: "images/sigils/lux-vexa.png",
+        UMBRA: "images/sigils/umbra-vexa.png",
+        VITA: "images/sigils/vita-vexa.png",
+        MORS: "images/sigils/mors-vexa.png"
+    },
     description: "Ajoute des dégâts périodiques dans une zone à la compétence.",
 
     stats: {
@@ -1538,7 +1682,16 @@ const secondaryModules = [
     id: "heal-single",
     name: "Soins monocible",
     latin: "Sana",
-    icon: "❤️",
+    icon: {
+        IGNIS: "images/sigils/ignis-sana.png",
+        AQUA: "images/sigils/aqua-sana.png",
+        TERRA: "images/sigils/terra-sana.png",
+        AER: "images/sigils/aer-sana.png",
+        LUX: "images/sigils/lux-sana.png",
+        UMBRA: "images/sigils/umbra-sana.png",
+        VITA: "images/sigils/vita-sana.png",
+        MORS: "images/sigils/mors-sana.png"
+    },
     description: "Ajoute un soin monocible à la compétence.",
 
     stats: {
@@ -1612,7 +1765,16 @@ const secondaryModules = [
     id: "heal-group",
     name: "Soins de groupe",
     latin: "Salva",
-    icon: "💕",
+    icon: {
+        IGNIS: "images/sigils/ignis-salva.png",
+        AQUA: "images/sigils/aqua-salva.png",
+        TERRA: "images/sigils/terra-salva.png",
+        AER: "images/sigils/aer-salva.png",
+        LUX: "images/sigils/lux-salva.png",
+        UMBRA: "images/sigils/umbra-salva.png",
+        VITA: "images/sigils/vita-salva.png",
+        MORS: "images/sigils/mors-salva.png"
+    },
     description: "Ajoute un soin de groupe à la compétence.",
 
     stats: {
@@ -1694,7 +1856,16 @@ const secondaryModules = [
     id: "heal-hot",
     name: "Soins sur la durée",
     latin: "Cura",
-    icon: "💚",
+    icon: {
+        IGNIS: "images/sigils/ignis-cura.png",
+        AQUA: "images/sigils/aqua-cura.png",
+        TERRA: "images/sigils/terra-cura.png",
+        AER: "images/sigils/aer-cura.png",
+        LUX: "images/sigils/lux-cura.png",
+        UMBRA: "images/sigils/umbra-cura.png",
+        VITA: "images/sigils/vita-cura.png",
+        MORS: "images/sigils/mors-cura.png"
+    },
     description: "Ajoute un soin périodique à la compétence.",
 
     stats: {
@@ -1784,7 +1955,17 @@ const secondaryModules = [
     id: "heal-hot-area",
     name: "Soins de groupe sur la durée",
     latin: "Recrea",
-    icon: "💟",
+        icon: {
+            IGNIS: "images/sigils/ignis-recrea.png",
+            AQUA: "images/sigils/aqua-recrea.png",
+            TERRA: "images/sigils/terra-recrea.png",
+            AER: "images/sigils/aer-recrea.png",
+            LUX: "images/sigils/lux-recrea.png",
+            UMBRA: "images/sigils/umbra-recrea.png",
+            VITA: "images/sigils/vita-recrea.png",
+            MORS: "images/sigils/mors-recrea.png"
+        },
+
     description: "Ajoute des soins périodiques de groupe à la compétence.",
 
     stats: {
@@ -1882,7 +2063,16 @@ const secondaryModules = [
     id: "shield",
     name: "Bouclier",
     latin: "Protege",
-    icon: "🛡️",
+    icon: {
+        IGNIS: "images/sigils/ignis-protege.png",
+        AQUA: "images/sigils/aqua-protege.png",
+        TERRA: "images/sigils/terra-protege.png",
+        AER: "images/sigils/aer-protege.png",
+        LUX: "images/sigils/lux-protege.png",
+        UMBRA: "images/sigils/umbra-protege.png",
+        VITA: "images/sigils/vita-protege.png",
+        MORS: "images/sigils/mors-protege.png"
+    },
     description: "Ajoute un bouclier à la compétence.",
 
     stats: {
@@ -1964,7 +2154,16 @@ const secondaryModules = [
     id: "shield-area",
     name: "Bouclier de groupe",
     latin: "Munire",
-    icon: "☂️",
+    icon: {
+        IGNIS: "images/sigils/ignis-munire.png",
+        AQUA: "images/sigils/aqua-munire.png",
+        TERRA: "images/sigils/terra-munire.png",
+        AER: "images/sigils/aer-munire.png",
+        LUX: "images/sigils/lux-munire.png",
+        UMBRA: "images/sigils/umbra-munire.png",
+        VITA: "images/sigils/vita-munire.png",
+        MORS: "images/sigils/mors-munire.png"
+    },
     description: "Ajoute un bouclier de groupe à la compétence.",
 
     stats: {
@@ -2054,7 +2253,16 @@ const secondaryModules = [
     id: "combat-buff",
     name: "Buff de combat",
     latin: "Bonus",
-    icon: "⬆️",
+    icon: {
+        IGNIS: "images/sigils/ignis-bonus.png",
+        AQUA: "images/sigils/aqua-bonus.png",
+        TERRA: "images/sigils/terra-bonus.png",
+        AER: "images/sigils/aer-bonus.png",
+        LUX: "images/sigils/lux-bonus.png",
+        UMBRA: "images/sigils/umbra-bonus.png",
+        VITA: "images/sigils/vita-bonus.png",
+        MORS: "images/sigils/mors-bonus.png"
+    },
     description: "Ajoute une amélioration temporaire à la compétence.",
 
     stats: {
@@ -2128,7 +2336,16 @@ const secondaryModules = [
     id: "debuff",
     name: "Débuff",
     latin: "Malus",
-    icon: "⬇️",
+    icon: {
+        IGNIS: "images/sigils/ignis-malus.png",
+        AQUA: "images/sigils/aqua-malus.png",
+        TERRA: "images/sigils/terra-malus.png",
+        AER: "images/sigils/aer-malus.png",
+        LUX: "images/sigils/lux-malus.png",
+        UMBRA: "images/sigils/umbra-malus.png",
+        VITA: "images/sigils/vita-malus.png",
+        MORS: "images/sigils/mors-malus.png"
+    },
     description: "Ajoute un affaiblissement temporaire à la compétence.",
 
     stats: {
