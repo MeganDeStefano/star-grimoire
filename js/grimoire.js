@@ -84,7 +84,14 @@ function updateActivePassives() {
                     <div class="active-passive-row">
 
                         <span class="active-passive-name">
-                            🛡️ Posture défensive
+                            <div class="active-passive-name">
+                                <img
+                                    src="images/general/tank.png"
+                                    alt="Posture défensive"
+                                    class="active-passive-icon"
+                                >
+                                Posture défensive
+                            </div>
                         </span>
 
                         <span class="active-passive-value">
@@ -899,6 +906,11 @@ function updateResult() {
 
         <h2 class="spell-name">
             ${generateSpellName()}
+            <img
+                src="${magicIcons[currentMagic]}"
+                alt="${currentMagic}"
+                class="spell-name-element-icon"
+            >
         </h2>
 
         <div class="spell-main">
