@@ -1,3 +1,56 @@
+/* ========================================== CHOIX ICONS ======================================== */
+
+const spellIcons = [
+    {
+        id: "spell-01",
+        image: "images/icons/spell-01.png",
+        unlocked: true,
+        condition: 'Finir le donjon "Citadelle des anges" sans mourir.'
+    },
+    {
+        id: "spell-02",
+        image: "images/icons/spell-02.png",
+        unlocked: false,
+        condition: 'Finir le donjon "Volcan de braises" sans mourir.'
+    },
+    {
+        id: "spell-03",
+        image: "images/icons/spell-03.png",
+        unlocked: true,
+        condition: 'Offrir 10 offrandes au Dieu "Ignara".'
+    },
+    {
+        id: "spell-04",
+        image: "images/icons/spell-04.png",
+        unlocked: true,
+        condition: 'Atteindre une affinité de 50 avec Freya.'
+    },
+    {
+        id: "spell-05",
+        image: "images/icons/spell-05.png",
+        unlocked: false,
+        condition: 'Atteindre une affinité de 70 avec Freya.'
+    },
+    {
+        id: "spell-06",
+        image: "images/icons/spell-06.png",
+        unlocked: true,
+        condition: 'Vaincre 100 créatures élémentaires.'
+    },
+    {
+        id: "spell-07",
+        image: "images/icons/spell-07.png",
+        unlocked: false,
+        condition: 'Vaincre le boss "Cœur du Volcan".'
+    },
+    {
+        id: "spell-08",
+        image: "images/icons/spell-08.png",
+        unlocked: true,
+        condition: 'Découvrir le Sanctuaire oublié.'
+    }
+];
+
 /* =============================================== MAGIES =============================================== */
 
 const magics = [
