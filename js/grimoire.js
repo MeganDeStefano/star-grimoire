@@ -1,3 +1,8 @@
+/* ========================================== VARIABLES =========================================== */
+
+let customSpellName = "";
+
+
 /* ========================================== PAGE NOVICE =========================================== */
 
 let tankPosture = 0;
@@ -244,15 +249,32 @@ function renderMagicTabs() {
             selectedPrimary = null;
             selectedSecondary = null;
             selectedRange = null;
+            selectedSpellIcon = null;
+            customSpellName = "";
+
+            const customNameInput =
+                document.getElementById("customSpellName");
+
+            if (customNameInput) {
+                customNameInput.value = "";
+            }
+
+            const customNameCount =
+                document.getElementById("customNameCount");
+
+            if (customNameCount) {
+                customNameCount.textContent = "0";
+            }
 
             renderMagicTabs();
             renderModules();
             refreshRangeDisplay();
+            renderSpellIcons();
             updateResult();
             renderCurrentPage();
 
         };
-
+        
         container.appendChild(button);
 
     });
@@ -446,6 +468,80 @@ function renderModules() {
         );
 
     });
+
+}
+
+function renderSpellIcons() {
+
+    const container = document.getElementById("spellIconOptions");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    spellIcons.forEach(icon => {
+
+        const option = document.createElement("div");
+
+        option.className =
+            "spell-icon-option" +
+            (!icon.unlocked ? " locked" : "") +
+            (selectedSpellIcon === icon.id ? " selected" : "");
+
+        option.innerHTML = `
+            <img src="${icon.image}" alt="Icône de compétence">
+
+            <div class="tooltip">
+                <strong class="${icon.unlocked ? "unlocked-text" : "locked-text"}">
+                    ${icon.unlocked ? "Débloqué" : "Bloqué"}
+                </strong>
+
+                ${icon.condition}
+            </div>
+        `;
+
+        if (icon.unlocked) {
+
+            option.onclick = () => {
+
+                if (selectedSpellIcon === icon.id) {
+                    selectedSpellIcon = null;
+                } else {
+                    selectedSpellIcon = icon.id;
+                }
+
+                renderSpellIcons();
+                updateResult();
+
+            };
+
+        }
+
+        container.appendChild(option);
+
+    });
+
+}
+
+/* ========================================== NOM PERSONNALISE =========================================== */
+
+function updateCustomSpellName() {
+
+    const input =
+        document.getElementById("customSpellName");
+
+    const counter =
+        document.getElementById("customNameCount");
+
+    if (!input) return;
+
+    customSpellName = input.value;
+
+    if (counter) {
+        counter.textContent = customSpellName.length;
+    }
+
+    updateResult();
 
 }
 
@@ -904,31 +1000,53 @@ function updateResult() {
 
     container.innerHTML = `
 
-        <h2 class="spell-name">
+    <h2 class="spell-name">
+        ${customSpellName.trim() || generateSpellName()}
+        <img
+            src="${magicIcons[currentMagic]}"
+            alt="${currentMagic}"
+            class="spell-name-element-icon"
+        >
+    </h2>
+
+    ${customSpellName.trim() ? `
+        <div class="spell-technical-name">
             ${generateSpellName()}
-            <img
-                src="${magicIcons[currentMagic]}"
-                alt="${currentMagic}"
-                class="spell-name-element-icon"
-            >
-        </h2>
+        </div>
+    ` : ""}
+
 
         <div class="spell-main">
 
             <div class="spell-icon">
-                <div class="spell-icon-primary">
-                    ${typeof selectedPrimary.icon === "object"
-                        ? `<img src="${selectedPrimary.icon[currentMagic]}" alt="${selectedPrimary.latin}">`
-                        : selectedPrimary.icon}
-                </div>
 
-                ${selectedSecondary ? `
-                    <div class="spell-icon-secondary">
-                        ${typeof selectedSecondary.icon === "object"
-                            ? `<img src="${selectedSecondary.icon[currentMagic]}" alt="${selectedSecondary.latin}">`
-                            : selectedSecondary.icon}
+                ${selectedSpellIcon ? `
+
+                    <div class="spell-icon-custom">
+                        <img
+                            src="${spellIcons.find(icon => icon.id === selectedSpellIcon).image}"
+                            alt="Icône personnalisée"
+                        >
                     </div>
-                ` : ""}
+
+                ` : `
+
+                    <div class="spell-icon-primary">
+                        ${typeof selectedPrimary.icon === "object"
+                            ? `<img src="${selectedPrimary.icon[currentMagic]}" alt="${selectedPrimary.latin}">`
+                            : selectedPrimary.icon}
+                    </div>
+
+                    ${selectedSecondary ? `
+                        <div class="spell-icon-secondary">
+                            ${typeof selectedSecondary.icon === "object"
+                                ? `<img src="${selectedSecondary.icon[currentMagic]}" alt="${selectedSecondary.latin}">`
+                                : selectedSecondary.icon}
+                        </div>
+                    ` : ""}
+
+                `}
+
             </div>
 
             <div class="spell-description">
@@ -998,8 +1116,9 @@ function updateResult() {
 /* ========================================== INITIALISATION =========================================== */
 
 renderMagicTabs();
+renderCurrentPage();
 renderModules();
 refreshRangeDisplay();
+renderSpellIcons();
 updateResult();
-renderCurrentPage();
 updateActivePassives();
