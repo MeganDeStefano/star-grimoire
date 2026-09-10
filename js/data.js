@@ -54,7 +54,6 @@ const spellIcons = [
 /* =============================================== MAGIES =============================================== */
 
 const magics = [
-    "NOVICE",
     "IGNIS",
     "AQUA",
     "TERRA",
@@ -66,7 +65,6 @@ const magics = [
 ];
 
 const magicIcons = {
-    NOVICE: null,
     IGNIS: "images/elements/ignis.png",
     AQUA: "images/elements/aqua.png",
     TERRA: "images/elements/terra.png",
@@ -88,7 +86,8 @@ const magicColors = {
     MORS: "#9b9b9b"
 };
 
-let currentMagic = "NOVICE";
+let currentMagic = "IGNIS";
+let currentAffinity = 100;
 
 
 /* ===================================== MODULES PRINCIPAUX =============================================== */
@@ -98,8 +97,9 @@ const primaryModules = [
 
 {
     id: "damage-single",
-    name: "Dégâts monocible",
+    name: "Dégâts directs",
     latin: "Percute",
+
     icon: {
         IGNIS: "images/sigils/ignis-percute.png",
         AQUA: "images/sigils/aqua-percute.png",
@@ -110,191 +110,18 @@ const primaryModules = [
         VITA: "images/sigils/vita-percute.png",
         MORS: "images/sigils/mors-percute.png"
     },
-    description: "Inflige des dégâts à une cible unique.",
-    compatible: [
-        "damage-single",
-        "damage-area",
-        "damage-dot",
-        "damage-dot-area",
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-        "debuff"
-    ],
+
+    description: "Inflige des dégâts à une cible.",
 
     stats: {
-        IGNIS: {
-            rank: 5,
-            power: 155,
-            cost: 12,
-            cast: 0,
-            cooldown: 4
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 115,
-            cost: 8,
-            cast: 0,
-            cooldown: 2
-        },
-
-        TERRA: {
-            rank: 4,
-            power: 160,
-            cost: 10,
-            cast: 1,
-            cooldown: 7
-        },
-
-        AER: {
-            rank: 3,
-            power: 120,
-            cost: 6,
-            cast: 0,
-            cooldown: 1
-        },
-
-        LUX: {
-            rank: 3,
-            power: 140,
-            cost: 14,
-            cast: 0.75,
-            cooldown: 5
-        },
-
-        UMBRA: {
-            rank: 5,
-            power: 175,
-            cost: 18,
-            cast: 1.5,
-            cooldown: 8
-        },
-
-        VITA: {
-            rank: 2,
-            power: 120,
-            cost: 10,
-            cast: 0.25,
-            cooldown: 3
-        },
-
-        MORS: {
-            rank: 3,
-            power: 145,
-            cost: 15,
-            cast: 1,
-            cooldown: 6
-        }
-    }
-},
-
-{
-    id: "damage-area",
-    name: "Dégâts de zone",
-    latin: "Explode",
-    icon: {
-        IGNIS: "images/sigils/ignis-explode.png",
-        AQUA: "images/sigils/aqua-explode.png",
-        TERRA: "images/sigils/terra-explode.png",
-        AER: "images/sigils/aer-explode.png",
-        LUX: "images/sigils/lux-explode.png",
-        UMBRA: "images/sigils/umbra-explode.png",
-        VITA: "images/sigils/vita-explode.png",
-        MORS: "images/sigils/mors-explode.png"
-    },
-    description: "Inflige des dégâts aux cibles présentes dans une zone.",
-    compatible: [
-        "damage-single",
-        "damage-area",
-        "damage-dot",
-        "damage-dot-area",
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-        "debuff"
-    ],
-
-    stats: {
-        IGNIS: {
-            rank: 5,
-            power: 135,
-            cost: 16,
-            cast: 0,
-            cooldown: 7,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 95,
-            cost: 12,
-            cast: 0,
-            cooldown: 5,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 4,
-            power: 140,
-            cost: 20,
-            cast: 1,
-            cooldown: 10,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 4,
-            power: 110,
-            cost: 10,
-            cast: 0,
-            cooldown: 4,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 2,
-            power: 110,
-            cost: 18,
-            cast: 0.75,
-            cooldown: 8,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 3,
-            power: 135,
-            cost: 22,
-            cast: 1.5,
-            cooldown: 11,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 2,
-            power: 100,
-            cost: 14,
-            cast: 0.25,
-            cooldown: 6,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 3,
-            power: 125,
-            cost: 19,
-            cast: 1,
-            cooldown: 9,
-            aoe: 4
-        }
+        IGNIS: { power: 600, cast: 1, cooldown: 5 },
+        AQUA:  { power: 450, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 950, cast: 1.5, cooldown: 8 },
+        AER:   { power: 100, cast: 0, cooldown: 1 },
+        LUX:   { power: 200, cast: 0, cooldown: 2 },
+        UMBRA: { power: 850, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 700, cast: 1, cooldown: 6 },
+        MORS:  { power: 350, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -302,6 +129,7 @@ const primaryModules = [
     id: "damage-dot",
     name: "Dégâts sur la durée",
     latin: "Dole",
+
     icon: {
         IGNIS: "images/sigils/ignis-dole.png",
         AQUA: "images/sigils/aqua-dole.png",
@@ -312,230 +140,26 @@ const primaryModules = [
         VITA: "images/sigils/vita-dole.png",
         MORS: "images/sigils/mors-dole.png"
     },
-    description: "Inflige des dégâts progressivement pendant une durée déterminée.",
-    compatible: [
-        "damage-single",
-        "damage-area",
-        "damage-dot",
-        "damage-dot-area",
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-        "debuff"
-    ],
+
+    description: "Inflige des dégâts progressivement, pendant une durée déterminée.",
 
     stats: {
-        IGNIS: {
-            rank: 4,
-            power: 145,
-            duration: 6,
-            ticks: 3,
-            cost: 12,
-            cast: 0,
-            cooldown: 4
-        },
-
-        AQUA: {
-            rank: 5,
-            power: 145,
-            duration: 12,
-            ticks: 6,
-            cost: 8,
-            cast: 0,
-            cooldown: 2
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 140,
-            duration: 8,
-            ticks: 2,
-            cost: 10,
-            cast: 1,
-            cooldown: 7
-        },
-
-        AER: {
-            rank: 3,
-            power: 120,
-            duration: 8,
-            ticks: 8,
-            cost: 6,
-            cast: 0,
-            cooldown: 1
-        },
-
-        LUX: {
-            rank: 2,
-            power: 130,
-            duration: 10,
-            ticks: 5,
-            cost: 14,
-            cast: 0.75,
-            cooldown: 5
-        },
-
-        UMBRA: {
-            rank: 5,
-            power: 175,
-            duration: 10,
-            ticks: 5,
-            cost: 18,
-            cast: 1.5,
-            cooldown: 8
-        },
-
-        VITA: {
-            rank: 2,
-            power: 120,
-            duration: 10,
-            ticks: 5,
-            cost: 10,
-            cast: 0.25,
-            cooldown: 3
-        },
-
-        MORS: {
-            rank: 5,
-            power: 165,
-            duration: 12,
-            ticks: 6,
-            cost: 15,
-            cast: 1,
-            cooldown: 6
-        }
-    }
-},
-
-{
-    id: "damage-dot-area",
-    name: "Dégâts de zone sur la durée",
-    latin: "Vexa",
-    icon: {
-        IGNIS: "images/sigils/ignis-vexa.png",
-        AQUA: "images/sigils/aqua-vexa.png",
-        TERRA: "images/sigils/terra-vexa.png",
-        AER: "images/sigils/aer-vexa.png",
-        LUX: "images/sigils/lux-vexa.png",
-        UMBRA: "images/sigils/umbra-vexa.png",
-        VITA: "images/sigils/vita-vexa.png",
-        MORS: "images/sigils/mors-vexa.png"
-    },
-    description: "Inflige des dégâts progressivement aux ennemis dans une zone.",
-    compatible: [
-        "damage-single",
-        "damage-area",
-        "damage-dot",
-        "damage-dot-area",
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-        "debuff"
-    ],
-
-    stats: {
-        IGNIS: {
-            rank: 4,
-            power: 125,
-            duration: 6,
-            ticks: 3,
-            cost: 16,
-            cast: 0,
-            cooldown: 7,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 4,
-            power: 115,
-            duration: 12,
-            ticks: 6,
-            cost: 12,
-            cast: 0,
-            cooldown: 5,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 120,
-            duration: 8,
-            ticks: 2,
-            cost: 20,
-            cast: 1,
-            cooldown: 10,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 4,
-            power: 110,
-            duration: 8,
-            ticks: 8,
-            cost: 10,
-            cast: 0,
-            cooldown: 4,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 2,
-            power: 110,
-            duration: 10,
-            ticks: 5,
-            cost: 18,
-            cast: 0.75,
-            cooldown: 8,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 4,
-            power: 145,
-            duration: 10,
-            ticks: 5,
-            cost: 22,
-            cast: 1.5,
-            cooldown: 11,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 2,
-            power: 100,
-            duration: 10,
-            ticks: 5,
-            cost: 14,
-            cast: 0.25,
-            cooldown: 6,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 5,
-            power: 145,
-            duration: 12,
-            ticks: 6,
-            cost: 19,
-            cast: 1,
-            cooldown: 9,
-            aoe: 4
-        }
+        IGNIS: { power: 900, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 800, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 1200, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 500, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 600, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 1100, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 1000, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 700, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
 {
     id: "heal-single",
-    name: "Soins monocible",
+    name: "Soins directs",
     latin: "Sana",
+
     icon: {
         IGNIS: "images/sigils/ignis-sana.png",
         AQUA: "images/sigils/aqua-sana.png",
@@ -546,181 +170,18 @@ const primaryModules = [
         VITA: "images/sigils/vita-sana.png",
         MORS: "images/sigils/mors-sana.png"
     },
-    description: "Rend des points de vie à une cible unique.",
-    compatible: [
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-    ],
+
+    description: "Rend des points de vie.",
 
     stats: {
-        IGNIS: {
-            rank: 2,
-            power: 125,
-            cost: 12,
-            cast: 0,
-            cooldown: 4
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 115,
-            cost: 8,
-            cast: 0,
-            cooldown: 2
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 140,
-            cost: 10,
-            cast: 1,
-            cooldown: 7
-        },
-
-        AER: {
-            rank: 3,
-            power: 120,
-            cost: 6,
-            cast: 0,
-            cooldown: 1
-        },
-
-        LUX: {
-            rank: 5,
-            power: 160,
-            cost: 14,
-            cast: 0.75,
-            cooldown: 5
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 145,
-            cost: 18,
-            cast: 1.5,
-            cooldown: 8
-        },
-
-        VITA: {
-            rank: 4,
-            power: 140,
-            cost: 10,
-            cast: 0.25,
-            cooldown: 3
-        },
-
-        MORS: {
-            rank: 2,
-            power: 135,
-            cost: 15,
-            cast: 1,
-            cooldown: 6
-        }
-    }
-},
-
-{
-    id: "heal-group",
-    name: "Soins de groupe",
-    latin: "Salva",
-    icon: {
-        IGNIS: "images/sigils/ignis-salva.png",
-        AQUA: "images/sigils/aqua-salva.png",
-        TERRA: "images/sigils/terra-salva.png",
-        AER: "images/sigils/aer-salva.png",
-        LUX: "images/sigils/lux-salva.png",
-        UMBRA: "images/sigils/umbra-salva.png",
-        VITA: "images/sigils/vita-salva.png",
-        MORS: "images/sigils/mors-salva.png"
-    },
-    description: "Rend des points de vie à plusieurs cibles.",
-    compatible: [
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-    ],
-
-    stats: {
-        IGNIS: {
-            rank: 2,
-            power: 105,
-            cost: 16,
-            cast: 0,
-            cooldown: 7,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 95,
-            cost: 12,
-            cast: 0,
-            cooldown: 5,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 120,
-            cost: 20,
-            cast: 1,
-            cooldown: 10,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 3,
-            power: 100,
-            cost: 10,
-            cast: 0,
-            cooldown: 4,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 4,
-            power: 130,
-            cost: 18,
-            cast: 0.75,
-            cooldown: 8,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 125,
-            cost: 22,
-            cast: 1.5,
-            cooldown: 11,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 4,
-            power: 120,
-            cost: 14,
-            cast: 0.25,
-            cooldown: 6,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 2,
-            power: 115,
-            cost: 19,
-            cast: 1,
-            cooldown: 9,
-            aoe: 4
-        }
+        IGNIS: { power: 600, cast: 1, cooldown: 5 },
+        AQUA:  { power: 450, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 950, cast: 1.5, cooldown: 8 },
+        AER:   { power: 100, cast: 0, cooldown: 1 },
+        LUX:   { power: 200, cast: 0, cooldown: 2 },
+        UMBRA: { power: 850, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 700, cast: 1, cooldown: 6 },
+        MORS:  { power: 350, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -728,6 +189,7 @@ const primaryModules = [
     id: "heal-hot",
     name: "Soins sur la durée",
     latin: "Cura",
+
     icon: {
         IGNIS: "images/sigils/ignis-cura.png",
         AQUA: "images/sigils/aqua-cura.png",
@@ -738,213 +200,18 @@ const primaryModules = [
         VITA: "images/sigils/vita-cura.png",
         MORS: "images/sigils/mors-cura.png"
     },
+
     description: "Rend progressivement des points de vie pendant une durée déterminée.",
-    compatible: [
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-    ],
 
     stats: {
-        IGNIS: {
-            rank: 2,
-            power: 125,
-            duration: 6,
-            ticks: 3,
-            cost: 12,
-            cast: 0,
-            cooldown: 4
-        },
-
-        AQUA: {
-            rank: 5,
-            power: 145,
-            duration: 12,
-            ticks: 6,
-            cost: 8,
-            cast: 0,
-            cooldown: 2
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 140,
-            duration: 8,
-            ticks: 2,
-            cost: 10,
-            cast: 1,
-            cooldown: 7
-        },
-
-        AER: {
-            rank: 3,
-            power: 120,
-            duration: 8,
-            ticks: 8,
-            cost: 6,
-            cast: 0,
-            cooldown: 1
-        },
-
-        LUX: {
-            rank: 3,
-            power: 140,
-            duration: 10,
-            ticks: 5,
-            cost: 14,
-            cast: 0.75,
-            cooldown: 5
-        },
-
-        UMBRA: {
-            rank: 3,
-            power: 155,
-            duration: 10,
-            ticks: 5,
-            cost: 18,
-            cast: 1.5,
-            cooldown: 8
-        },
-
-        VITA: {
-            rank: 5,
-            power: 150,
-            duration: 10,
-            ticks: 5,
-            cost: 10,
-            cast: 0.25,
-            cooldown: 3
-        },
-
-        MORS: {
-            rank: 4,
-            power: 155,
-            duration: 12,
-            ticks: 6,
-            cost: 15,
-            cast: 1,
-            cooldown: 6
-        }
-    }
-},
-
-{
-    id: "heal-hot-area",
-    name: "Soins de groupe sur la durée",
-    latin: "Recrea",
-    icon: {
-        IGNIS: "images/sigils/ignis-recrea.png",
-        AQUA: "images/sigils/aqua-recrea.png",
-        TERRA: "images/sigils/terra-recrea.png",
-        AER: "images/sigils/aer-recrea.png",
-        LUX: "images/sigils/lux-recrea.png",
-        UMBRA: "images/sigils/umbra-recrea.png",
-        VITA: "images/sigils/vita-recrea.png",
-        MORS: "images/sigils/mors-recrea.png"
-    },
-    description: "Soigne progressivement les alliés dans une zone.",
-    compatible: [
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-    ],
-
-    stats: {
-        IGNIS: {
-            rank: 2,
-            power: 105,
-            duration: 6,
-            ticks: 3,
-            cost: 16,
-            cast: 0,
-            cooldown: 7,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 4,
-            power: 115,
-            duration: 12,
-            ticks: 6,
-            cost: 12,
-            cast: 0,
-            cooldown: 5,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 120,
-            duration: 8,
-            ticks: 2,
-            cost: 20,
-            cast: 1,
-            cooldown: 10,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 3,
-            power: 100,
-            duration: 8,
-            ticks: 8,
-            cost: 10,
-            cast: 0,
-            cooldown: 4,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 3,
-            power: 120,
-            duration: 10,
-            ticks: 5,
-            cost: 18,
-            cast: 0.75,
-            cooldown: 8,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 125,
-            duration: 10,
-            ticks: 5,
-            cost: 22,
-            cast: 1.5,
-            cooldown: 11,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 4,
-            power: 120,
-            duration: 10,
-            ticks: 5,
-            cost: 14,
-            cast: 0.25,
-            cooldown: 6,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 3,
-            power: 125,
-            duration: 12,
-            ticks: 6,
-            cost: 19,
-            cast: 1,
-            cooldown: 9,
-            aoe: 4
-        }
+        IGNIS: { power: 900, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 800, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 1200, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 500, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 600, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 1100, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 1000, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 700, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -952,6 +219,7 @@ const primaryModules = [
     id: "shield",
     name: "Bouclier",
     latin: "Protege",
+
     icon: {
         IGNIS: "images/sigils/ignis-protege.png",
         AQUA: "images/sigils/aqua-protege.png",
@@ -962,204 +230,26 @@ const primaryModules = [
         VITA: "images/sigils/vita-protege.png",
         MORS: "images/sigils/mors-protege.png"
     },
+
     description: "Applique un bouclier absorbant des dégâts.",
-    compatible: [
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-    ],
 
     stats: {
-        IGNIS: {
-            rank: 2,
-            power: 125,
-            cost: 12,
-            cast: 0,
-            cooldown: 9,
-            duration: 8
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 115,
-            cost: 8,
-            cast: 0,
-            cooldown: 7,
-            duration: 12
-        },
-
-        TERRA: {
-            rank: 5,
-            power: 170,
-            cost: 10,
-            cast: 1,
-            cooldown: 12,
-            duration: 12
-        },
-
-        AER: {
-            rank: 2,
-            power: 110,
-            cost: 6,
-            cast: 0,
-            cooldown: 6,
-            duration: 6
-        },
-
-        LUX: {
-            rank: 3,
-            power: 140,
-            cost: 14,
-            cast: 0.75,
-            cooldown: 10,
-            duration: 10
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 145,
-            cost: 18,
-            cast: 1.5,
-            cooldown: 13,
-            duration: 8
-        },
-
-        VITA: {
-            rank: 3,
-            power: 130,
-            cost: 10,
-            cast: 0.25,
-            cooldown: 8,
-            duration: 10
-        },
-
-        MORS: {
-            rank: 2,
-            power: 135,
-            cost: 15,
-            cast: 1,
-            cooldown: 11,
-            duration: 8
-        }
-    }
-},
-
-{
-    id: "shield-area",
-    name: "Bouclier de groupe",
-    latin: "Munire",
-    icon: {
-        IGNIS: "images/sigils/ignis-munire.png",
-        AQUA: "images/sigils/aqua-munire.png",
-        TERRA: "images/sigils/terra-munire.png",
-        AER: "images/sigils/aer-munire.png",
-        LUX: "images/sigils/lux-munire.png",
-        UMBRA: "images/sigils/umbra-munire.png",
-        VITA: "images/sigils/vita-munire.png",
-        MORS: "images/sigils/mors-munire.png"
-    },
-    description: "Applique un bouclier aux alliés présents dans une zone.",
-    compatible: [
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-    ],
-
-    stats: {
-        IGNIS: {
-            rank: 2,
-            power: 105,
-            cost: 16,
-            cast: 0,
-            cooldown: 12,
-            duration: 8,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 95,
-            cost: 12,
-            cast: 0,
-            cooldown: 10,
-            duration: 12,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 5,
-            power: 150,
-            cost: 20,
-            cast: 1,
-            cooldown: 15,
-            duration: 12,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 2,
-            power: 90,
-            cost: 10,
-            cast: 0,
-            cooldown: 9,
-            duration: 6,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 3,
-            power: 120,
-            cost: 18,
-            cast: 0.75,
-            cooldown: 13,
-            duration: 10,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 125,
-            cost: 22,
-            cast: 1.5,
-            cooldown: 16,
-            duration: 8,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 2,
-            power: 100,
-            cost: 14,
-            cast: 0.25,
-            cooldown: 11,
-            duration: 10,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 1,
-            power: 105,
-            cost: 19,
-            cast: 1,
-            cooldown: 14,
-            duration: 8,
-            aoe: 4
-        }
+        IGNIS: { power: 720, duration: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 640, duration: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 960, duration: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 400, duration: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 480, duration: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 880, duration: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 800, duration: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 560, duration: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
 {
     id: "combat-buff",
-    name: "Buff de combat",
+    name: "Amélioration",
     latin: "Bonus",
+
     icon: {
         IGNIS: "images/sigils/ignis-bonus.png",
         AQUA: "images/sigils/aqua-bonus.png",
@@ -1170,88 +260,26 @@ const primaryModules = [
         VITA: "images/sigils/vita-bonus.png",
         MORS: "images/sigils/mors-bonus.png"
     },
-    description: "Applique une amélioration temporaire au personnage.",
-    compatible: [
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-    ],
+
+    description: "Applique une amélioration temporaire augmentant l'Affinité de l'élément de la compétence.",
 
     stats: {
-        IGNIS: {
-            effect: 20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        AQUA: {
-            effect: 20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        TERRA: {
-            effect: 20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        AER: {
-            effect: 20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        LUX: {
-            effect: 20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        UMBRA: {
-            effect: 20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        VITA: {
-            effect: 20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        MORS: {
-            effect: 20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        }
+        IGNIS: { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        AQUA:  { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        TERRA: { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        AER:   { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        LUX:   { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        UMBRA: { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        VITA:  { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        MORS:  { effect: 20, duration: 10, cast: 1, cooldown: 40 }
     }
 },
 
 {
     id: "debuff",
-    name: "Débuff",
+    name: "Affaiblissement",
     latin: "Malus",
+
     icon: {
         IGNIS: "images/sigils/ignis-malus.png",
         AQUA: "images/sigils/aqua-malus.png",
@@ -1262,88 +290,50 @@ const primaryModules = [
         VITA: "images/sigils/vita-malus.png",
         MORS: "images/sigils/mors-malus.png"
     },
-    description: "Applique un affaiblissement temporaire à la cible.",
-    compatible: [
-        "damage-single",
-        "damage-area",
-        "damage-dot",
-        "damage-dot-area",
-        "heal-single",
-        "heal-group",
-        "heal-hot",
-        "heal-hot-area",
-        "shield",
-        "shield-area",
-        "combat-buff",
-        "debuff"
-    ],
+
+    description: "Applique un affaiblissement temporaire réduisant l'Affinité de l'élément de la compétence.",
 
     stats: {
-        IGNIS: {
-            effect: -20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        AQUA: {
-            effect: -20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        TERRA: {
-            effect: -20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        AER: {
-            effect: -20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        LUX: {
-            effect: -20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        UMBRA: {
-            effect: -20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        VITA: {
-            effect: -20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        },
-
-        MORS: {
-            effect: -20,
-            cost: 20,
-            cast: 1,
-            cooldown: 40,
-            duration: 10
-        }
+        IGNIS: { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        AQUA:  { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        TERRA: { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        AER:   { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        LUX:   { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        UMBRA: { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        VITA:  { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        MORS:  { effect: -20, duration: 10, cast: 1, cooldown: 40 }
     }
 },
+
+{
+    id: "purga",
+    name: "Dissipation",
+    latin: "Purga",
+
+    icon: {
+        IGNIS: "images/sigils/ignis-purga.png",
+        AQUA: "images/sigils/aqua-purga.png",
+        TERRA: "images/sigils/terra-purga.png",
+        AER: "images/sigils/aer-purga.png",
+        LUX: "images/sigils/lux-purga.png",
+        UMBRA: "images/sigils/umbra-purga.png",
+        VITA: "images/sigils/vita-purga.png",
+        MORS: "images/sigils/mors-purga.png"
+    },
+
+    description: "Retire les effets temporaires appliqués à une cible.",
+
+    stats: {
+        IGNIS: { effect: 2, cast: 1, cooldown: 20 },
+        AQUA:  { effect: 2, cast: 1, cooldown: 20 },
+        TERRA: { effect: 2, cast: 1, cooldown: 20 },
+        AER:   { effect: 2, cast: 1, cooldown: 20 },
+        LUX:   { effect: 2, cast: 1, cooldown: 20 },
+        UMBRA: { effect: 2, cast: 1, cooldown: 20 },
+        VITA:  { effect: 2, cast: 1, cooldown: 20 },
+        MORS:  { effect: 2, cast: 1, cooldown: 20 }
+    }
+}
 
 ];
 
@@ -1353,8 +343,9 @@ const secondaryModules = [
 
 {
     id: "damage-single",
-    name: "Dégâts monocible",
+    name: "Dégâts directs",
     latin: "Percute",
+
     icon: {
         IGNIS: "images/sigils/ignis-percute.png",
         AQUA: "images/sigils/aqua-percute.png",
@@ -1365,163 +356,18 @@ const secondaryModules = [
         VITA: "images/sigils/vita-percute.png",
         MORS: "images/sigils/mors-percute.png"
     },
-    description: "Ajoute des dégâts monocible à la compétence.",
+
+    description: "Ajoute des dégâts directs à la compétence.",
 
     stats: {
-        IGNIS: {
-            rank: 5,
-            power: 77.5,
-            cost: 6,
-            cast: 0,
-            cooldown: 2
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 57.5,
-            cost: 4,
-            cast: 0,
-            cooldown: 1
-        },
-
-        TERRA: {
-            rank: 4,
-            power: 80,
-            cost: 5,
-            cast: 0.5,
-            cooldown: 3.5
-        },
-
-        AER: {
-            rank: 3,
-            power: 60,
-            cost: 3,
-            cast: 0,
-            cooldown: 0.5
-        },
-
-        LUX: {
-            rank: 3,
-            power: 70,
-            cost: 7,
-            cast: 0.375,
-            cooldown: 2.5
-        },
-
-        UMBRA: {
-            rank: 5,
-            power: 87.5,
-            cost: 9,
-            cast: 0.75,
-            cooldown: 4
-        },
-
-        VITA: {
-            rank: 2,
-            power: 60,
-            cost: 5,
-            cast: 0.125,
-            cooldown: 1.5
-        },
-
-        MORS: {
-            rank: 3,
-            power: 72.5,
-            cost: 7.5,
-            cast: 0.5,
-            cooldown: 3
-        }
-    }
-},
-
-{
-    id: "damage-area",
-    name: "Dégâts de zone",
-    latin: "Explode",
-    icon: {
-        IGNIS: "images/sigils/ignis-explode.png",
-        AQUA: "images/sigils/aqua-explode.png",
-        TERRA: "images/sigils/terra-explode.png",
-        AER: "images/sigils/aer-explode.png",
-        LUX: "images/sigils/lux-explode.png",
-        UMBRA: "images/sigils/umbra-explode.png",
-        VITA: "images/sigils/vita-explode.png",
-        MORS: "images/sigils/mors-explode.png"
-    },
-    description: "Ajoute des dégâts de zone à la compétence.",
-
-    stats: {
-        IGNIS: {
-            rank: 5,
-            power: 67.5,
-            cost: 8,
-            cast: 0,
-            cooldown: 3.5,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 47.5,
-            cost: 6,
-            cast: 0,
-            cooldown: 2.5,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 4,
-            power: 70,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 5,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 4,
-            power: 55,
-            cost: 5,
-            cast: 0,
-            cooldown: 2,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 2,
-            power: 55,
-            cost: 9,
-            cast: 0.375,
-            cooldown: 4,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 3,
-            power: 67.5,
-            cost: 11,
-            cast: 0.75,
-            cooldown: 5.5,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 2,
-            power: 50,
-            cost: 7,
-            cast: 0.125,
-            cooldown: 3,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 3,
-            power: 62.5,
-            cost: 9.5,
-            cast: 0.5,
-            cooldown: 4.5,
-            aoe: 4
-        }
+        IGNIS: { power: 600, cast: 1, cooldown: 5 },
+        AQUA:  { power: 450, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 950, cast: 1.5, cooldown: 8 },
+        AER:   { power: 100, cast: 0, cooldown: 1 },
+        LUX:   { power: 200, cast: 0, cooldown: 2 },
+        UMBRA: { power: 850, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 700, cast: 1, cooldown: 6 },
+        MORS:  { power: 350, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -1529,6 +375,7 @@ const secondaryModules = [
     id: "damage-dot",
     name: "Dégâts sur la durée",
     latin: "Dole",
+
     icon: {
         IGNIS: "images/sigils/ignis-dole.png",
         AQUA: "images/sigils/aqua-dole.png",
@@ -1539,202 +386,26 @@ const secondaryModules = [
         VITA: "images/sigils/vita-dole.png",
         MORS: "images/sigils/mors-dole.png"
     },
-    description: "Ajoute des dégâts périodiques à la compétence.",
+
+    description: "Ajoute des dégâts progressifs à la compétence.",
 
     stats: {
-        IGNIS: {
-            rank: 4,
-            power: 72.5,
-            duration: 6,
-            ticks: 3,
-            cost: 6,
-            cast: 0,
-            cooldown: 2
-        },
-
-        AQUA: {
-            rank: 5,
-            power: 72.5,
-            duration: 12,
-            ticks: 6,
-            cost: 4,
-            cast: 0,
-            cooldown: 1
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 70,
-            duration: 8,
-            ticks: 2,
-            cost: 5,
-            cast: 0.5,
-            cooldown: 3.5
-        },
-
-        AER: {
-            rank: 3,
-            power: 60,
-            duration: 8,
-            ticks: 8,
-            cost: 3,
-            cast: 0,
-            cooldown: 0.5
-        },
-
-        LUX: {
-            rank: 2,
-            power: 65,
-            duration: 10,
-            ticks: 5,
-            cost: 7,
-            cast: 0.375,
-            cooldown: 2.5
-        },
-
-        UMBRA: {
-            rank: 5,
-            power: 87.5,
-            duration: 10,
-            ticks: 5,
-            cost: 9,
-            cast: 0.75,
-            cooldown: 4
-        },
-
-        VITA: {
-            rank: 2,
-            power: 60,
-            duration: 10,
-            ticks: 5,
-            cost: 5,
-            cast: 0.125,
-            cooldown: 1.5
-        },
-
-        MORS: {
-            rank: 5,
-            power: 82.5,
-            duration: 12,
-            ticks: 6,
-            cost: 7.5,
-            cast: 0.5,
-            cooldown: 3
-        }
-    }
-},
-
-{
-    id: "damage-dot-area",
-    name: "Dégâts de zone sur la durée",
-    latin: "Vexa",
-    icon: {
-        IGNIS: "images/sigils/ignis-vexa.png",
-        AQUA: "images/sigils/aqua-vexa.png",
-        TERRA: "images/sigils/terra-vexa.png",
-        AER: "images/sigils/aer-vexa.png",
-        LUX: "images/sigils/lux-vexa.png",
-        UMBRA: "images/sigils/umbra-vexa.png",
-        VITA: "images/sigils/vita-vexa.png",
-        MORS: "images/sigils/mors-vexa.png"
-    },
-    description: "Ajoute des dégâts périodiques dans une zone à la compétence.",
-
-    stats: {
-        IGNIS: {
-            rank: 4,
-            power: 62.5,
-            duration: 6,
-            ticks: 3,
-            cost: 8,
-            cast: 0,
-            cooldown: 3.5,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 4,
-            power: 57.5,
-            duration: 12,
-            ticks: 6,
-            cost: 6,
-            cast: 0,
-            cooldown: 2.5,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 60,
-            duration: 8,
-            ticks: 2,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 5,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 4,
-            power: 55,
-            duration: 8,
-            ticks: 8,
-            cost: 5,
-            cast: 0,
-            cooldown: 2,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 2,
-            power: 55,
-            duration: 10,
-            ticks: 5,
-            cost: 9,
-            cast: 0.375,
-            cooldown: 4,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 4,
-            power: 72.5,
-            duration: 10,
-            ticks: 5,
-            cost: 11,
-            cast: 0.75,
-            cooldown: 5.5,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 2,
-            power: 50,
-            duration: 10,
-            ticks: 5,
-            cost: 7,
-            cast: 0.125,
-            cooldown: 3,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 5,
-            power: 72.5,
-            duration: 12,
-            ticks: 6,
-            cost: 9.5,
-            cast: 0.5,
-            cooldown: 4.5,
-            aoe: 4
-        }
+        IGNIS: { power: 900, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 800, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 1200, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 500, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 600, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 1100, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 1000, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 700, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
 {
     id: "heal-single",
-    name: "Soins monocible",
+    name: "Soins directs",
     latin: "Sana",
+
     icon: {
         IGNIS: "images/sigils/ignis-sana.png",
         AQUA: "images/sigils/aqua-sana.png",
@@ -1745,163 +416,18 @@ const secondaryModules = [
         VITA: "images/sigils/vita-sana.png",
         MORS: "images/sigils/mors-sana.png"
     },
-    description: "Ajoute un soin monocible à la compétence.",
+
+    description: "Ajoute des soins directs à la compétence.",
 
     stats: {
-        IGNIS: {
-            rank: 2,
-            power: 62.5,
-            cost: 6,
-            cast: 0,
-            cooldown: 2
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 57.5,
-            cost: 4,
-            cast: 0,
-            cooldown: 1
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 70,
-            cost: 5,
-            cast: 0.5,
-            cooldown: 3.5
-        },
-
-        AER: {
-            rank: 3,
-            power: 60,
-            cost: 3,
-            cast: 0,
-            cooldown: 0.5
-        },
-
-        LUX: {
-            rank: 5,
-            power: 80,
-            cost: 7,
-            cast: 0.375,
-            cooldown: 2.5
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 72.5,
-            cost: 9,
-            cast: 0.75,
-            cooldown: 4
-        },
-
-        VITA: {
-            rank: 4,
-            power: 70,
-            cost: 5,
-            cast: 0.125,
-            cooldown: 1.5
-        },
-
-        MORS: {
-            rank: 2,
-            power: 67.5,
-            cost: 7.5,
-            cast: 0.5,
-            cooldown: 3
-        }
-    }
-},
-
-{
-    id: "heal-group",
-    name: "Soins de groupe",
-    latin: "Salva",
-    icon: {
-        IGNIS: "images/sigils/ignis-salva.png",
-        AQUA: "images/sigils/aqua-salva.png",
-        TERRA: "images/sigils/terra-salva.png",
-        AER: "images/sigils/aer-salva.png",
-        LUX: "images/sigils/lux-salva.png",
-        UMBRA: "images/sigils/umbra-salva.png",
-        VITA: "images/sigils/vita-salva.png",
-        MORS: "images/sigils/mors-salva.png"
-    },
-    description: "Ajoute un soin de groupe à la compétence.",
-
-    stats: {
-        IGNIS: {
-            rank: 2,
-            power: 52.5,
-            cost: 8,
-            cast: 0,
-            cooldown: 3.5,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 47.5,
-            cost: 6,
-            cast: 0,
-            cooldown: 2.5,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 60,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 5,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 3,
-            power: 50,
-            cost: 5,
-            cast: 0,
-            cooldown: 2,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 4,
-            power: 65,
-            cost: 9,
-            cast: 0.375,
-            cooldown: 4,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 62.5,
-            cost: 11,
-            cast: 0.75,
-            cooldown: 5.5,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 4,
-            power: 60,
-            cost: 7,
-            cast: 0.125,
-            cooldown: 3,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 2,
-            power: 57.5,
-            cost: 9.5,
-            cast: 0.5,
-            cooldown: 4.5,
-            aoe: 4
-        }
+        IGNIS: { power: 600, cast: 1, cooldown: 5 },
+        AQUA:  { power: 450, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 950, cast: 1.5, cooldown: 8 },
+        AER:   { power: 100, cast: 0, cooldown: 1 },
+        LUX:   { power: 200, cast: 0, cooldown: 2 },
+        UMBRA: { power: 850, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 700, cast: 1, cooldown: 6 },
+        MORS:  { power: 350, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -1909,6 +435,7 @@ const secondaryModules = [
     id: "heal-hot",
     name: "Soins sur la durée",
     latin: "Cura",
+
     icon: {
         IGNIS: "images/sigils/ignis-cura.png",
         AQUA: "images/sigils/aqua-cura.png",
@@ -1919,196 +446,18 @@ const secondaryModules = [
         VITA: "images/sigils/vita-cura.png",
         MORS: "images/sigils/mors-cura.png"
     },
-    description: "Ajoute un soin périodique à la compétence.",
+
+    description: "Ajoute des soins progressifs à la compétence.",
 
     stats: {
-        IGNIS: {
-            rank: 2,
-            power: 62.5,
-            duration: 6,
-            ticks: 3,
-            cost: 6,
-            cast: 0,
-            cooldown: 2
-        },
-
-        AQUA: {
-            rank: 5,
-            power: 72.5,
-            duration: 12,
-            ticks: 6,
-            cost: 4,
-            cast: 0,
-            cooldown: 1
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 70,
-            duration: 8,
-            ticks: 2,
-            cost: 5,
-            cast: 0.5,
-            cooldown: 3.5
-        },
-
-        AER: {
-            rank: 3,
-            power: 60,
-            duration: 8,
-            ticks: 8,
-            cost: 3,
-            cast: 0,
-            cooldown: 0.5
-        },
-
-        LUX: {
-            rank: 3,
-            power: 70,
-            duration: 10,
-            ticks: 5,
-            cost: 7,
-            cast: 0.375,
-            cooldown: 2.5
-        },
-
-        UMBRA: {
-            rank: 3,
-            power: 77.5,
-            duration: 10,
-            ticks: 5,
-            cost: 9,
-            cast: 0.75,
-            cooldown: 4
-        },
-
-        VITA: {
-            rank: 5,
-            power: 75,
-            duration: 10,
-            ticks: 5,
-            cost: 5,
-            cast: 0.125,
-            cooldown: 1.5
-        },
-
-        MORS: {
-            rank: 4,
-            power: 77.5,
-            duration: 12,
-            ticks: 6,
-            cost: 7.5,
-            cast: 0.5,
-            cooldown: 3
-        }
-    }
-},
-
-{
-    id: "heal-hot-area",
-    name: "Soins de groupe sur la durée",
-    latin: "Recrea",
-        icon: {
-            IGNIS: "images/sigils/ignis-recrea.png",
-            AQUA: "images/sigils/aqua-recrea.png",
-            TERRA: "images/sigils/terra-recrea.png",
-            AER: "images/sigils/aer-recrea.png",
-            LUX: "images/sigils/lux-recrea.png",
-            UMBRA: "images/sigils/umbra-recrea.png",
-            VITA: "images/sigils/vita-recrea.png",
-            MORS: "images/sigils/mors-recrea.png"
-        },
-
-    description: "Ajoute des soins périodiques de groupe à la compétence.",
-
-    stats: {
-        IGNIS: {
-            rank: 2,
-            power: 52.5,
-            duration: 6,
-            ticks: 3,
-            cost: 8,
-            cast: 0,
-            cooldown: 3.5,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 4,
-            power: 57.5,
-            duration: 12,
-            ticks: 6,
-            cost: 6,
-            cast: 0,
-            cooldown: 2.5,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 2,
-            power: 60,
-            duration: 8,
-            ticks: 2,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 5,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 3,
-            power: 50,
-            duration: 8,
-            ticks: 8,
-            cost: 5,
-            cast: 0,
-            cooldown: 2,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 3,
-            power: 60,
-            duration: 10,
-            ticks: 5,
-            cost: 9,
-            cast: 0.375,
-            cooldown: 4,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 62.5,
-            duration: 10,
-            ticks: 5,
-            cost: 11,
-            cast: 0.75,
-            cooldown: 5.5,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 4,
-            power: 60,
-            duration: 10,
-            ticks: 5,
-            cost: 7,
-            cast: 0.125,
-            cooldown: 3,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 3,
-            power: 62.5,
-            duration: 12,
-            ticks: 6,
-            cost: 9.5,
-            cast: 0.5,
-            cooldown: 4.5,
-            aoe: 4
-        }
+        IGNIS: { power: 900, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 800, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 1200, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 500, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 600, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 1100, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 1000, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 700, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -2116,6 +465,7 @@ const secondaryModules = [
     id: "shield",
     name: "Bouclier",
     latin: "Protege",
+
     icon: {
         IGNIS: "images/sigils/ignis-protege.png",
         AQUA: "images/sigils/aqua-protege.png",
@@ -2126,186 +476,26 @@ const secondaryModules = [
         VITA: "images/sigils/vita-protege.png",
         MORS: "images/sigils/mors-protege.png"
     },
-    description: "Ajoute un bouclier à la compétence.",
+
+    description: "Ajoute un bouclier absorbant des dégâts à la compétence.",
 
     stats: {
-        IGNIS: {
-            rank: 2,
-            power: 62.5,
-            cost: 6,
-            cast: 0,
-            cooldown: 4.5,
-            duration: 8
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 57.5,
-            cost: 4,
-            cast: 0,
-            cooldown: 3.5,
-            duration: 12
-        },
-
-        TERRA: {
-            rank: 5,
-            power: 85,
-            cost: 5,
-            cast: 0.5,
-            cooldown: 6,
-            duration: 12
-        },
-
-        AER: {
-            rank: 2,
-            power: 55,
-            cost: 3,
-            cast: 0,
-            cooldown: 3,
-            duration: 6
-        },
-
-        LUX: {
-            rank: 3,
-            power: 70,
-            cost: 7,
-            cast: 0.375,
-            cooldown: 5,
-            duration: 10
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 72.5,
-            cost: 9,
-            cast: 0.75,
-            cooldown: 6.5,
-            duration: 8
-        },
-
-        VITA: {
-            rank: 3,
-            power: 65,
-            cost: 5,
-            cast: 0.125,
-            cooldown: 4,
-            duration: 10
-        },
-
-        MORS: {
-            rank: 2,
-            power: 67.5,
-            cost: 7.5,
-            cast: 0.5,
-            cooldown: 5.5,
-            duration: 8
-        }
-    }
-},
-
-{
-    id: "shield-area",
-    name: "Bouclier de groupe",
-    latin: "Munire",
-    icon: {
-        IGNIS: "images/sigils/ignis-munire.png",
-        AQUA: "images/sigils/aqua-munire.png",
-        TERRA: "images/sigils/terra-munire.png",
-        AER: "images/sigils/aer-munire.png",
-        LUX: "images/sigils/lux-munire.png",
-        UMBRA: "images/sigils/umbra-munire.png",
-        VITA: "images/sigils/vita-munire.png",
-        MORS: "images/sigils/mors-munire.png"
-    },
-    description: "Ajoute un bouclier de groupe à la compétence.",
-
-    stats: {
-        IGNIS: {
-            rank: 2,
-            power: 52.5,
-            cost: 8,
-            cast: 0,
-            cooldown: 6,
-            duration: 8,
-            aoe: 4
-        },
-
-        AQUA: {
-            rank: 2,
-            power: 47.5,
-            cost: 6,
-            cast: 0,
-            cooldown: 5,
-            duration: 12,
-            aoe: 4
-        },
-
-        TERRA: {
-            rank: 5,
-            power: 75,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 7.5,
-            duration: 12,
-            aoe: 4
-        },
-
-        AER: {
-            rank: 2,
-            power: 45,
-            cost: 5,
-            cast: 0,
-            cooldown: 4.5,
-            duration: 6,
-            aoe: 4
-        },
-
-        LUX: {
-            rank: 3,
-            power: 60,
-            cost: 9,
-            cast: 0.375,
-            cooldown: 6.5,
-            duration: 10,
-            aoe: 4
-        },
-
-        UMBRA: {
-            rank: 2,
-            power: 62.5,
-            cost: 11,
-            cast: 0.75,
-            cooldown: 8,
-            duration: 8,
-            aoe: 4
-        },
-
-        VITA: {
-            rank: 2,
-            power: 50,
-            cost: 7,
-            cast: 0.125,
-            cooldown: 5.5,
-            duration: 10,
-            aoe: 4
-        },
-
-        MORS: {
-            rank: 1,
-            power: 52.5,
-            cost: 9.5,
-            cast: 0.5,
-            cooldown: 7,
-            duration: 8,
-            aoe: 4
-        }
+        IGNIS: { power: 720, duration: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 640, duration: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 960, duration: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 400, duration: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 480, duration: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 880, duration: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 800, duration: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 560, duration: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
 {
     id: "combat-buff",
-    name: "Buff de combat",
+    name: "Amélioration",
     latin: "Bonus",
+
     icon: {
         IGNIS: "images/sigils/ignis-bonus.png",
         AQUA: "images/sigils/aqua-bonus.png",
@@ -2316,79 +506,26 @@ const secondaryModules = [
         VITA: "images/sigils/vita-bonus.png",
         MORS: "images/sigils/mors-bonus.png"
     },
-    description: "Ajoute une amélioration temporaire à la compétence.",
+
+    description: "Ajoute une amélioration temporaire augmentant l'Affinité de l'élément de la compétence.",
 
     stats: {
-        IGNIS: {
-            effect: 10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        AQUA: {
-            effect: 10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        TERRA: {
-            effect: 10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        AER: {
-            effect: 10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        LUX: {
-            effect: 10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        UMBRA: {
-            effect: 10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        VITA: {
-            effect: 10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        MORS: {
-            effect: 10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        }
+        IGNIS: { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        AQUA:  { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        TERRA: { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        AER:   { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        LUX:   { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        UMBRA: { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        VITA:  { effect: 20, duration: 10, cast: 1, cooldown: 40 },
+        MORS:  { effect: 20, duration: 10, cast: 1, cooldown: 40 }
     }
 },
 
 {
     id: "debuff",
-    name: "Débuff",
+    name: "Affaiblissement",
     latin: "Malus",
+
     icon: {
         IGNIS: "images/sigils/ignis-malus.png",
         AQUA: "images/sigils/aqua-malus.png",
@@ -2399,94 +536,58 @@ const secondaryModules = [
         VITA: "images/sigils/vita-malus.png",
         MORS: "images/sigils/mors-malus.png"
     },
-    description: "Ajoute un affaiblissement temporaire à la compétence.",
+
+    description: "Ajoute un affaiblissement temporaire réduisant l'Affinité de l'élément de la compétence.",
 
     stats: {
-        IGNIS: {
-            effect: -10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
+        IGNIS: { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        AQUA:  { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        TERRA: { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        AER:   { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        LUX:   { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        UMBRA: { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        VITA:  { effect: -20, duration: 10, cast: 1, cooldown: 40 },
+        MORS:  { effect: -20, duration: 10, cast: 1, cooldown: 40 }
+    }
+},
 
-        AQUA: {
-            effect: -10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
+{
+    id: "purga",
+    name: "Dissipation",
+    latin: "Purga",
 
-        TERRA: {
-            effect: -10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
+    icon: {
+        IGNIS: "images/sigils/ignis-purga.png",
+        AQUA: "images/sigils/aqua-purga.png",
+        TERRA: "images/sigils/terra-purga.png",
+        AER: "images/sigils/aer-purga.png",
+        LUX: "images/sigils/lux-purga.png",
+        UMBRA: "images/sigils/umbra-purga.png",
+        VITA: "images/sigils/vita-purga.png",
+        MORS: "images/sigils/mors-purga.png"
+    },
 
-        AER: {
-            effect: -10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
+    description: "Retire des effets temporaires appliqués à une cible.",
 
-        LUX: {
-            effect: -10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        UMBRA: {
-            effect: -10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        VITA: {
-            effect: -10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        },
-
-        MORS: {
-            effect: -10,
-            cost: 10,
-            cast: 0.5,
-            cooldown: 20,
-            duration: 10
-        }
+    stats: {
+        IGNIS: { effect: 2, cast: 1, cooldown: 20 },
+        AQUA:  { effect: 2, cast: 1, cooldown: 20 },
+        TERRA: { effect: 2, cast: 1, cooldown: 20 },
+        AER:   { effect: 2, cast: 1, cooldown: 20 },
+        LUX:   { effect: 2, cast: 1, cooldown: 20 },
+        UMBRA: { effect: 2, cast: 1, cooldown: 20 },
+        VITA:  { effect: 2, cast: 1, cooldown: 20 },
+        MORS:  { effect: 2, cast: 1, cooldown: 20 }
     }
 }
 
 ];
 
+/* ================================== ÉTAT DU GRIMOIRE ===================================== */
+
+const definitivePrimaryModules = primaryModules;
+const definitiveSecondaryModules = secondaryModules;
+
 let selectedPrimary = null;
 let selectedSecondary = null;
-let selectedRange = null;
-
-const characterLevel = 50;
-const maxAffinity = 1;
-
-let availableAffinityPoints = 5;
-
-const affinities = {
-    IGNIS: 0,
-    AQUA: 0,
-    TERRA: 0,
-    AER: 0,
-    LUX: 0,
-    UMBRA: 0,
-    VITA: 0,
-    MORS: 0
-};
-
+let selectedTargeting = null;
