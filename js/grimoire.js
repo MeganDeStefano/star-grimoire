@@ -1,221 +1,7 @@
 /* ========================================== VARIABLES =========================================== */
 
 let customSpellName = "";
-
-
-/* ========================================== PAGE NOVICE =========================================== */
-
-let tankPosture = 0;
-
-function changeTankPosture(amount) {
-
-    if (amount > 0) {
-
-        if (tankPosture >= 1) {
-            return;
-        }
-
-        tankPosture = 1;
-
-    }
-
-    if (amount < 0) {
-
-        if (tankPosture <= 0) {
-            return;
-        }
-
-        tankPosture = 0;
-
-    }
-
-    document.getElementById("tank-posture").textContent =
-        `${tankPosture} / 1`;
-
-    const postureElement =
-        document.getElementById("tank-posture")
-            .closest(".affinity");
-
-    postureElement.classList.toggle(
-        "active",
-        tankPosture > 0
-    );
-
-    updateActivePassives();
-}
-
-function updateActivePassives() {
-
-    const container =
-        document.getElementById("activePassives");
-
-    let html = "";
-
-    Object.keys(affinities).forEach(element => {
-
-        if (affinities[element] > 0) {
-
-            html += `
-
-                <div class="active-passive-row">
-
-                    <span class="active-passive-name element-${element}">
-                        <img
-                            src="${magicIcons[element]}"
-                            alt="${element}"
-                            class="active-passive-icon"
-                        > 
-                        Affinité ${element}
-                    </span>
-
-                    <span class="active-passive-value">
-                        +10
-                    </span>
-
-                </div>
-
-            `;
-
-        }
-
-    });
-
-                /* Posture défensive */
-
-            if (tankPosture > 0) {
-
-                html += `
-
-                    <div class="active-passive-row">
-
-                        <span class="active-passive-name">
-                            <div class="active-passive-name">
-                                <img
-                                    src="images/general/tank.png"
-                                    alt="Posture défensive"
-                                    class="active-passive-icon"
-                                >
-                                Posture défensive
-                            </div>
-                        </span>
-
-                        <span class="active-passive-value">
-                            Active
-                        </span>
-
-                    </div>
-
-                `;
-
-            }
-
-
-
-    if (html === "") {
-
-        html = `
-
-            <div class="empty-passives">
-                Aucun passif élémentaire actif.
-            </div>
-
-        `;
-
-    }
-
-
-    container.innerHTML = html;
-
-}
-
-
-function changeAffinity(element, amount) {
-
-    const currentValue = affinities[element];
-
-
-    /* AJOUT D'UN POINT */
-
-    if (amount > 0) {
-
-        if (availableAffinityPoints <= 0) {
-            return;
-        }
-
-        if (currentValue >= maxAffinity) {
-            return;
-        }
-
-        affinities[element]++;
-        availableAffinityPoints--;
-
-    }
-
-
-    /* RETRAIT D'UN POINT */
-
-    if (amount < 0) {
-
-        if (currentValue <= 0) {
-            return;
-        }
-
-        affinities[element]--;
-        availableAffinityPoints++;
-
-    }
-
-
-    /* Mise à jour de l'affinité */
-
-    document.getElementById(
-        `affinity-${element}`
-    ).textContent =
-        `${affinities[element]} / ${maxAffinity}`;
-
-    const affinityElement =
-        document.getElementById(`affinity-${element}`)
-            .closest(".affinity");
-
-    affinityElement.classList.toggle(
-        "active",
-        affinities[element] > 0
-    );
-
-
-    /* Mise à jour des points disponibles */
-
-    document.getElementById(
-        "availablePoints"
-    ).textContent =
-        availableAffinityPoints;
-
-    updateActivePassives();
-
-}
-
-
-function renderCurrentPage() {
-
-    const novicePage =
-        document.getElementById("novicePage");
-
-    const magicBuilder =
-        document.getElementById("magicBuilder");
-
-    if (currentMagic === "NOVICE") {
-
-        novicePage.style.display = "block";
-        magicBuilder.style.display = "none";
-
-    } else {
-
-        novicePage.style.display = "none";
-        magicBuilder.style.display = "grid";
-
-    }
-
-}
+let selectedSpellIcon = null;
 
 /* ========================================== CREATION DES ONGLETS =========================================== */
 
@@ -233,22 +19,19 @@ function renderMagicTabs() {
             "magic-tab" +
             (magic === currentMagic ? " active" : "");
 
-        if (magic === "NOVICE") {
-            button.textContent = `⚔️ ${magic}`;
-        } else {
-            button.innerHTML = `
-                <img src="${magicIcons[magic]}" alt="${magic}">
-                <span>${magic}</span>
-            `;
-        }
+        button.innerHTML = `
+            <img src="${magicIcons[magic]}" alt="${magic}">
+            <span>${magic}</span>
+        `;
 
         button.onclick = () => {
 
             currentMagic = magic;
+            currentAffinity = 100;
 
             selectedPrimary = null;
             selectedSecondary = null;
-            selectedRange = null;
+            selectedTargeting = null;
             selectedSpellIcon = null;
             customSpellName = "";
 
@@ -268,11 +51,9 @@ function renderMagicTabs() {
 
             renderMagicTabs();
             renderModules();
-            refreshRangeDisplay();
+            refreshTargetingDisplay();
             renderSpellIcons();
             updateResult();
-            renderCurrentPage();
-
         };
         
         container.appendChild(button);
@@ -300,9 +81,6 @@ function createModuleElement(module, type) {
     }
 
 
-    /* Si un autre module de la même catégorie est sélectionné,
-       celui-ci passe à 50% */
-
     if (
         !selected &&
         (
@@ -313,21 +91,10 @@ function createModuleElement(module, type) {
         element.classList.add("dimmed");
     }
 
+    /* Le module secondaire devient disponible dès qu'un module principal est sélectionné */
 
-    /* Vérification compatibilité secondaire */
-
-    if (type === "secondary") {
-
-        if (!selectedPrimary) {
-            element.classList.add("disabled");
-        }
-
-        else if (
-            !selectedPrimary.compatible.includes(module.id)
-        ) {
-            element.classList.add("disabled");
-        }
-
+    if (type === "secondary" && !selectedPrimary) {
+        element.classList.add("disabled");
     }
 
 
@@ -337,10 +104,6 @@ function createModuleElement(module, type) {
             ${typeof module.icon === "object"
                 ? `<img src="${module.icon[currentMagic]}" alt="${module.latin}">`
                 : module.icon}
-        </div>
-
-        <div class="module-rank">
-            ${"★".repeat(module.stats?.[currentMagic]?.rank || 0)}
         </div>
 
         <div class="module-name">
@@ -366,57 +129,22 @@ function createModuleElement(module, type) {
 
                 selectedPrimary = null;
                 selectedSecondary = null;
-                selectedRange = null;
+                selectedTargeting = null;
 
-                refreshRangeDisplay();
+                refreshTargetingDisplay();
 
             } else {
 
                 selectedPrimary = module;
-
-                /* Gestion automatique de la portée */
-
-                if (
-                    [
-                        "damage-single",
-                        "damage-area",
-                        "damage-dot",
-                        "damage-dot-area"
-                    ].includes(module.id)
-                ) {
-
-                    selectedRange = null;
-
-                } else {
-
-                    selectedRange = "distance";
-
-                }
-
-
-                /* Si le secondaire actuel devient incompatible
-                   avec le nouveau module principal */
-
-                if (
-                    selectedSecondary &&
-                    !module.compatible.includes(selectedSecondary.id)
-                ) {
-                    selectedSecondary = null;
-                }
+                selectedTargeting = null;
 
             }
 
-            refreshRangeDisplay();
+            refreshTargetingDisplay();
 
         } else {
 
             if (!selectedPrimary) return;
-
-            if (
-                !selectedPrimary.compatible.includes(module.id)
-            ) {
-                return;
-            }
 
             /* Cliquer à nouveau retire le secondaire */
 
@@ -451,8 +179,7 @@ function renderModules() {
     primaryContainer.innerHTML = "";
     secondaryContainer.innerHTML = "";
 
-
-    primaryModules.forEach(module => {
+    definitivePrimaryModules.forEach(module => {
 
         primaryContainer.appendChild(
             createModuleElement(module, "primary")
@@ -461,7 +188,7 @@ function renderModules() {
     });
 
 
-    secondaryModules.forEach(module => {
+    definitiveSecondaryModules.forEach(module => {
 
         secondaryContainer.appendChild(
             createModuleElement(module, "secondary")
@@ -578,111 +305,47 @@ function generateSpellName() {
 
 }
 
-/* ========================================== PORTEE =========================================== */
+/* ========================================== CIBLAGE =========================================== */
 
-function refreshRangeDisplay() {
+function refreshTargetingDisplay() {
 
-    const melee = document.getElementById("rangeMelee");
-    const distance = document.getElementById("rangeDistance");
+    const mono = document.getElementById("targetMono");
+    const aoe = document.getElementById("targetAoe");
 
-    const rangeChoiceAllowed =
-        selectedPrimary &&
-        [
-            "damage-single",
-            "damage-area",
-            "damage-dot",
-            "damage-dot-area"
-        ].includes(selectedPrimary.id);
+    if (!mono || !aoe) return;
 
-    melee.classList.toggle(
+    mono.classList.toggle(
         "selected",
-        selectedRange === "melee"
+        selectedTargeting === "mono"
     );
 
-    distance.classList.toggle(
+    aoe.classList.toggle(
         "selected",
-        selectedRange === "distance"
+        selectedTargeting === "aoe"
     );
-
 
     if (!selectedPrimary) {
-
-        melee.classList.add("disabled");
-        distance.classList.add("disabled");
-
+        mono.classList.add("disabled");
+        aoe.classList.add("disabled");
+    } else {
+        mono.classList.remove("disabled");
+        aoe.classList.remove("disabled");
     }
-
-    else if (!rangeChoiceAllowed) {
-
-        melee.classList.add("disabled");
-        distance.classList.remove("disabled");
-
-    }
-
-    else if (!selectedRange) {
-
-        melee.classList.remove("disabled");
-        distance.classList.remove("disabled");
-
-    }
-
-    else if (selectedRange === "melee") {
-
-        melee.classList.remove("disabled");
-        distance.classList.add("disabled");
-
-    }
-
-    else if (selectedRange === "distance") {
-
-        distance.classList.remove("disabled");
-        melee.classList.add("disabled");
-
-    }
-
 }
 
 
-function selectRange(range) {
+function selectTargeting(targeting) {
 
     if (!selectedPrimary) return;
 
-    const rangeChoiceAllowed = [
-        "damage-single",
-        "damage-area",
-        "damage-dot",
-        "damage-dot-area"
-    ].includes(selectedPrimary.id);
-
-    if (!rangeChoiceAllowed) {
-        selectedRange = "distance";
-        refreshRangeDisplay();
-        updateResult();
-        return;
-    }
-
-    if (selectedRange === range) {
-        selectedRange = null;
+    if (selectedTargeting === targeting) {
+        selectedTargeting = null;
     } else {
-        selectedRange = range;
+        selectedTargeting = targeting;
     }
 
-    refreshRangeDisplay();
+    refreshTargetingDisplay();
     updateResult();
-}
-
-
-function isDamageModule(module) {
-
-    if (!module) return false;
-
-    return [
-        "damage-single",
-        "damage-area",
-        "damage-dot",
-        "damage-dot-area"
-    ].includes(module.id);
-
 }
 
 /* ========================================== AFFICHAGE DES EFFETS =========================================== */
@@ -693,16 +356,54 @@ function generateEffectLine(module, stats) {
         return "";
     }
 
+    const isAoe = selectedTargeting === "aoe";
+
     let displayedPower = stats.power;
+    let displayedEffect = stats.effect;
+
+    /* Affinité élémentaire : 100 Affinité = 100 % de la puissance de base */
+
+    if (displayedPower !== undefined) {
+        displayedPower =
+            Math.ceil(
+                displayedPower * (0.5 + currentAffinity / 200)
+            );
+    }
+
+    /* Puissance des modules en AoE : 50 % de la valeur Mono par cible */
 
     if (
-        selectedRange === "melee" &&
-        isDamageModule(module) &&
+        isAoe &&
         displayedPower !== undefined
     ) {
-        displayedPower *= 1.10;
-        displayedPower = Math.round(displayedPower * 10) / 10;
+        displayedPower *= 0.5;
     }
+
+
+    /* Bonus / Malus en AoE : intensité divisée par deux */
+
+    if (
+        isAoe &&
+        (
+            module.id === "combat-buff" ||
+            module.id === "debuff"
+        ) &&
+        displayedEffect !== undefined
+    ) {
+        displayedEffect *= 0.5;
+    }
+
+
+    /* Purga en AoE : capacité divisée par deux par cible */
+
+    if (
+        isAoe &&
+        module.id === "purga" &&
+        displayedEffect !== undefined
+    ) {
+        displayedEffect *= 0.5;
+    }
+
 
     const element = `
         <img
@@ -720,74 +421,47 @@ function generateEffectLine(module, stats) {
 
         case "damage-single":
             label = "Dégâts";
-            value = `${element} ${displayedPower}%`;
-            break;
-
-        case "damage-area":
-            label = "Dégâts de zone";
-            value = `${element} ${displayedPower}% · ${stats.aoe}m`;
+            value = `${displayedPower} ${element}`;
             break;
 
         case "damage-dot":
             label = "Dégâts sur la durée";
-            value = `${element} ${displayedPower}% / ${stats.duration}s · ${stats.ticks} tics`;
-            break;
-
-        case "damage-dot-area":
-            label = "Dégâts de zone sur la durée";
-            value = `${element} ${displayedPower}% / ${stats.duration}s · ${stats.ticks} tics · ${stats.aoe}m`;
+            value = `${displayedPower} ${element} / ${stats.duration}s · ${stats.ticks} tics`;
             break;
 
         case "heal-single":
             label = "Soins";
-            value = `${element} ${stats.power}%`;
-            break;
-
-        case "heal-group":
-            label = "Soins de groupe";
-            value = `${element} ${stats.power}% · ${stats.aoe}m`;
+            value = `${displayedPower} ${element}`;
             break;
 
         case "heal-hot":
             label = "Soins sur la durée";
-            value = `${element} ${stats.power}% / ${stats.duration}s · ${stats.ticks} tics`;
-            break;
-
-        case "heal-hot-area":
-            label = "Soins de groupe sur la durée";
-            value = `${element} ${stats.power}% / ${stats.duration}s · ${stats.ticks} tics · ${stats.aoe}m`;
+            value = `${displayedPower} ${element} / ${stats.duration}s · ${stats.ticks} tics`;
             break;
 
         case "shield":
             label = "Bouclier";
-            value = `${element} ${stats.power}% · ${stats.duration}s`;
-            break;
-
-        case "shield-area":
-            label = "Bouclier de groupe";
-            value = `${element} ${stats.power}% · ${stats.duration}s · ${stats.aoe}m`;
-            break;
-
-        case "control":
-            label = "Contrôle";
-            value = `${stats.duration}s · ${stats.aoe}m`;
+            value = `${displayedPower} ${element} · ${stats.duration}s`;
             break;
 
         case "combat-buff":
-            label = "Buff";
-            value = `${element} +${stats.effect}% · ${stats.duration}s`;
+            label = "Affinité";
+            value = `+${displayedEffect} ${element} · ${stats.duration}s`;
             break;
 
         case "debuff":
-            label = "Débuff";
-            value = `${element} ${stats.effect}% · ${stats.duration}s`;
-            break;
-
-        case "persistent-buff":
             label = "Affinité";
-            value = `${element} +${stats.effect}% · 1h`;
+            value = `${displayedEffect} ${element} · ${stats.duration}s`;
             break;
 
+        case "purga":
+            label = "Dissipation";
+
+            value = isAoe
+                ? `Jusqu'à ${displayedEffect} effet${displayedEffect > 1 ? "s" : ""} par cible`
+                : `Jusqu'à ${displayedEffect} effet${displayedEffect > 1 ? "s" : ""}`;
+
+            break;
     }
 
 
@@ -803,7 +477,6 @@ function generateEffectLine(module, stats) {
         </div>
     `;
 }
-
 
 /* ========================================== COMBINAISON DES EFFETS =========================================== */
 
@@ -848,7 +521,8 @@ function generateCombinedEffects(
     }
 
 
-    /* Modules identiques : on fusionne */
+    /* Modules identiques : les effets s'additionnent,
+       mais leur durée et leur rythme restent inchangés */
 
     const combinedStats = {
         ...primaryStats
@@ -872,23 +546,20 @@ function generateCombinedEffects(
             secondaryStats.effect;
     }
 
-    if (
-        primaryStats.duration !== undefined &&
-        secondaryStats.duration !== undefined
-    ) {
+
+    /* Durée et nombre de tics :
+       on conserve les valeurs du module */
+
+    if (primaryStats.duration !== undefined) {
         combinedStats.duration =
-            primaryStats.duration +
-            secondaryStats.duration;
+            primaryStats.duration;
     }
 
-    if (
-        primaryStats.ticks !== undefined &&
-        secondaryStats.ticks !== undefined
-    ) {
+    if (primaryStats.ticks !== undefined) {
         combinedStats.ticks =
-            primaryStats.ticks +
-            secondaryStats.ticks;
+            primaryStats.ticks;
     }
+
 
     return generateEffectLine(
         primary,
@@ -897,23 +568,147 @@ function generateCombinedEffects(
 
 }
 
-/* ========================================== RESULTAT EN TEMPS REEL =========================================== */
+function generateTargetBehavior(primary, secondary) {
 
-function canChooseRange() {
-
-    if (!selectedPrimary) {
-        return false;
+    if (!primary) {
+        return "";
     }
 
-    return [
+    const offensiveModules = [
         "damage-single",
-        "damage-area",
         "damage-dot",
-        "damage-dot-area"
-    ].includes(selectedPrimary.id);
+        "debuff"
+    ];
 
+    const defensiveModules = [
+        "heal-single",
+        "heal-hot",
+        "shield",
+        "combat-buff"
+    ];
+
+    const modules = [primary, secondary].filter(Boolean);
+
+    const offensive = modules.filter(module =>
+        offensiveModules.includes(module.id)
+    );
+
+    const defensive = modules.filter(module =>
+        defensiveModules.includes(module.id)
+    );
+
+    const purga = modules.filter(module =>
+        module.id === "purga"
+    );
+
+
+    let enemyBehavior = "";
+    let allyBehavior = "";
+
+
+    /* PURGA SEUL / PURGA + PURGA */
+
+    if (
+        purga.length > 0 &&
+        offensive.length === 0 &&
+        defensive.length === 0
+    ) {
+        enemyBehavior =
+            "Retire les Bonus de la cible ennemie";
+
+        allyBehavior =
+            "Retire les Malus de la cible alliée ou de soi-même";
+    }
+
+
+    /* OFFENSIF + PURGA */
+
+    else if (
+        offensive.length > 0 &&
+        purga.length > 0
+    ) {
+        enemyBehavior =
+            "Effet offensif + retrait des Bonus sur la cible ennemie";
+
+        allyBehavior =
+            "Aucun effet";
+    }
+
+
+    /* DÉFENSIF + PURGA */
+
+    else if (
+        defensive.length > 0 &&
+        purga.length > 0
+    ) {
+        enemyBehavior =
+            "Effet défensif + retrait des Malus sur le lanceur";
+
+        allyBehavior =
+            "Effet défensif + retrait des Malus sur la cible";
+    }
+
+
+    /* OFFENSIF + DÉFENSIF */
+
+    else if (
+        offensive.length > 0 &&
+        defensive.length > 0
+    ) {
+        enemyBehavior =
+            "Effet offensif sur la cible · effet défensif sur le lanceur";
+
+        allyBehavior =
+            "Effet défensif sur la cible · effet offensif sans effet";
+    }
+
+
+    /* OFFENSIF SEUL / OFFENSIF + OFFENSIF */
+
+    else if (offensive.length > 0) {
+        enemyBehavior =
+            "Tous les effets sur la cible";
+
+        allyBehavior =
+            "Aucun effet";
+    }
+
+
+    /* DÉFENSIF SEUL / DÉFENSIF + DÉFENSIF */
+
+    else if (defensive.length > 0) {
+        enemyBehavior =
+            "Tous les effets sur le lanceur";
+
+        allyBehavior =
+            "Tous les effets sur la cible";
+    }
+
+
+    return `
+        <div class="info-row">
+            <span class="info-label">
+                Cible ennemie
+            </span>
+
+            <span class="info-value">
+                ${enemyBehavior}
+            </span>
+        </div>
+
+        <div class="info-row">
+            <span class="info-label">
+                Cible alliée
+            </span>
+
+            <span class="info-value">
+                ${allyBehavior}
+            </span>
+        </div>
+    `;
 }
 
+/* ========================================== RESULTAT EN TEMPS REEL =========================================== */
 
 function updateResult() {
 
@@ -928,7 +723,7 @@ function updateResult() {
             <div class="empty-result">
                 Sélectionnez un module principal pour commencer la création d'une compétence.
                 <br><br>
-                Un module secondaire pourra ensuite être ajouté si la combinaison est compatible.
+                Un module secondaire pourra ensuite être ajouté pour combiner deux effets.
             </div>
 
         `;
@@ -943,60 +738,23 @@ function updateResult() {
     const secondaryStats =
         selectedSecondary?.stats?.[currentMagic];
 
-
-    const totalCost =
-        selectedPrimary.id === "summon"
-            ? (primaryStats?.cost || 0)
-            : (primaryStats?.cost || 0) +
-              (secondaryStats?.cost || 0);
-
-    const costDisplay =
-        primaryStats
-            ? totalCost
-            : "—";
-
-
     const totalCast =
-        selectedPrimary.id === "summon"
-            ? (primaryStats?.cast || 0)
-            : (primaryStats?.cast || 0) +
-              (secondaryStats?.cast || 0);
+        (primaryStats?.cast || 0) +
+        (secondaryStats?.cast || 0);
 
     const castDisplay =
         primaryStats
             ? `${totalCast}s`
             : "—";
 
-
     const totalCooldown =
-        selectedPrimary.id === "summon"
-            ? (primaryStats?.cooldown || 0)
-            : (primaryStats?.cooldown || 0) +
-              (secondaryStats?.cooldown || 0);
+        (primaryStats?.cooldown || 0) +
+        (secondaryStats?.cooldown || 0);
 
     const cooldownDisplay =
         primaryStats
             ? `${totalCooldown}s`
             : "—";
-
-
-    const rangeValue =
-        selectedRange === "melee"
-            ? "0m"
-            : selectedRange === "distance"
-            ? "10m"
-            : "—";
-
-
-    const rangeWarning =
-        !selectedRange
-            ? `
-                <div class="range-warning">
-                    ⚠ Portée non sélectionnée
-                </div>
-            `
-            : "";
-
 
     container.innerHTML = `
 
@@ -1055,8 +813,6 @@ function updateResult() {
 
         </div>
 
-        ${rangeWarning}
-
         <div class="spell-info">
 
             ${generateCombinedEffects(
@@ -1066,15 +822,10 @@ function updateResult() {
                 secondaryStats
             )}
 
-            <div class="info-row">
-                <span class="info-label">
-                    Coût
-                </span>
-
-                <span class="info-value">
-                    ${costDisplay}
-                </span>
-            </div>
+            ${generateTargetBehavior(
+                selectedPrimary,
+                selectedSecondary
+            )}
 
             <div class="info-row">
                 <span class="info-label">
@@ -1097,13 +848,21 @@ function updateResult() {
             </div>
 
             <div class="info-row">
-                <span class="info-label">
-                    Portée
-                </span>
-
+                <span class="info-label">Ciblage</span>
                 <span class="info-value">
-                    ${rangeValue}
+                    ${
+                        selectedTargeting === "mono"
+                            ? "Mono · 1 cible · 100 %"
+                            : selectedTargeting === "aoe"
+                            ? "AoE · jusqu'à 4 cibles · 50 %"
+                            : "—"
+                    }
                 </span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Portée</span>
+                <span class="info-value">10 m</span>
             </div>
 
         </div>
@@ -1112,13 +871,41 @@ function updateResult() {
 
 }
 
+function changeCurrentAffinity(amount) {
+
+    currentAffinity += amount;
+
+    if (currentAffinity < 0) {
+        currentAffinity = 0;
+    }
+
+    if (currentAffinity > 100) {
+        currentAffinity = 100;
+    }
+
+    const value =
+        document.getElementById("currentAffinityValue");
+
+    if (value) {
+        value.textContent = currentAffinity;
+    }
+
+    const icon =
+        document.getElementById("currentAffinityIcon");
+
+    if (icon) {
+        icon.src = magicIcons[currentMagic];
+        icon.alt = currentMagic;
+    }
+
+    updateResult();
+
+}
 
 /* ========================================== INITIALISATION =========================================== */
 
 renderMagicTabs();
-renderCurrentPage();
 renderModules();
-refreshRangeDisplay();
+refreshTargetingDisplay();
 renderSpellIcons();
 updateResult();
-updateActivePassives();
