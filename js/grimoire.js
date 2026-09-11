@@ -27,7 +27,22 @@ function renderMagicTabs() {
         button.onclick = () => {
 
             currentMagic = magic;
-            currentAffinity = 100;
+            currentMagicLevel = 10;
+            
+            const magicLevelValue =
+                document.getElementById("currentMagicLevelValue");
+
+            if (magicLevelValue) {
+                magicLevelValue.textContent = currentMagicLevel;
+            }
+
+            const magicLevelIcon =
+                document.getElementById("currentMagicLevelIcon");
+
+            if (magicLevelIcon) {
+                magicLevelIcon.src = magicIcons[currentMagic];
+                magicLevelIcon.alt = currentMagic;
+            }
 
             selectedPrimary = null;
             selectedSecondary = null;
@@ -361,14 +376,27 @@ function generateEffectLine(module, stats) {
     let displayedPower = stats.power;
     let displayedEffect = stats.effect;
 
-    /* Affinité élémentaire : 100 Affinité = 100 % de la puissance de base */
+    /* Niveau de Magie : niveau 1 = 50 % de la valeur de référence niveau 10 = 100 % */
 
-    if (displayedPower !== undefined) {
-        displayedPower =
-            Math.ceil(
-                displayedPower * (0.5 + currentAffinity / 200)
-            );
-    }
+        const levelMultiplier =
+            0.5 + ((currentMagicLevel - 1) / 9) * 0.5;
+
+        if (displayedPower !== undefined) {
+            displayedPower =
+                Math.ceil(displayedPower * levelMultiplier);
+        }
+
+        if (
+            displayedEffect !== undefined &&
+            module.id !== "purga"
+        ) {
+            displayedEffect =
+                Math.ceil(Math.abs(displayedEffect) * levelMultiplier);
+
+            if (module.id === "debuff") {
+                displayedEffect *= -1;
+            }
+        }
 
     /* Puissance des modules en AoE : 50 % de la valeur Mono par cible */
 
@@ -445,13 +473,13 @@ function generateEffectLine(module, stats) {
             break;
 
         case "combat-buff":
-            label = "Affinité";
-            value = `+${displayedEffect} ${element} · ${stats.duration}s`;
+            label = `Résistance ${element}`;
+            value = `+${displayedEffect} % · ${stats.duration}s`;
             break;
 
         case "debuff":
-            label = "Affinité";
-            value = `${displayedEffect} ${element} · ${stats.duration}s`;
+            label = `Résistance ${element}`;
+            value = `${displayedEffect} % · ${stats.duration}s`;
             break;
 
         case "purga":
@@ -871,27 +899,25 @@ function updateResult() {
 
 }
 
-function changeCurrentAffinity(amount) {
+function changeCurrentMagicLevel(amount) {
 
-    currentAffinity += amount;
+    currentMagicLevel += amount;
 
-    if (currentAffinity < 0) {
-        currentAffinity = 0;
+    if (currentMagicLevel < 1) {
+        currentMagicLevel = 1;
     }
 
-    if (currentAffinity > 100) {
-        currentAffinity = 100;
+    if (currentMagicLevel > 10) {
+        currentMagicLevel = 10;
     }
 
-    const value =
-        document.getElementById("currentAffinityValue");
+    const value = document.getElementById("currentMagicLevelValue");
 
     if (value) {
-        value.textContent = currentAffinity;
+        value.textContent = currentMagicLevel;
     }
 
-    const icon =
-        document.getElementById("currentAffinityIcon");
+    const icon = document.getElementById("currentMagicLevelIcon");
 
     if (icon) {
         icon.src = magicIcons[currentMagic];
@@ -899,7 +925,6 @@ function changeCurrentAffinity(amount) {
     }
 
     updateResult();
-
 }
 
 /* ========================================== INITIALISATION =========================================== */
