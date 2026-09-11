@@ -2,6 +2,7 @@
 
 let customSpellName = "";
 let selectedSpellIcon = null;
+let currentPosture = "neutral";
 
 /* ========================================== CREATION DES ONGLETS =========================================== */
 
@@ -395,6 +396,33 @@ function generateEffectLine(module, stats) {
 
             if (module.id === "debuff") {
                 displayedEffect *= -1;
+            }
+        }
+
+        /* Postures : bonus de puissance */
+
+        if (
+            currentPosture === "offensive" &&
+            (
+                module.id === "damage-single" ||
+                module.id === "damage-dot"
+            )
+        ) {
+            if (displayedPower !== undefined) {
+                displayedPower = Math.ceil(displayedPower * 1.5);
+            }
+        }
+
+        if (
+            currentPosture === "affective" &&
+            (
+                module.id === "heal-single" ||
+                module.id === "heal-hot" ||
+                module.id === "shield"
+            )
+        ) {
+            if (displayedPower !== undefined) {
+                displayedPower = Math.ceil(displayedPower * 1.5);
             }
         }
 
@@ -923,6 +951,29 @@ function changeCurrentMagicLevel(amount) {
         icon.src = magicIcons[currentMagic];
         icon.alt = currentMagic;
     }
+
+    updateResult();
+}
+
+function selectPosture(posture) {
+
+    currentPosture = posture;
+
+    const buttons = {
+        neutral: document.getElementById("postureNeutral"),
+        defensive: document.getElementById("postureDefensive"),
+        offensive: document.getElementById("postureOffensive"),
+        affective: document.getElementById("postureAffective")
+    };
+
+    Object.entries(buttons).forEach(([key, button]) => {
+
+        if (!button) {
+            return;
+        }
+
+        button.classList.toggle("active", key === currentPosture);
+    });
 
     updateResult();
 }
