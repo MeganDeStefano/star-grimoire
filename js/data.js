@@ -54,14 +54,14 @@ const spellIcons = [
 /* =============================================== MAGIES =============================================== */
 
 const magics = [
-    "IGNIS",
-    "AQUA",
-    "TERRA",
     "AER",
     "LUX",
-    "UMBRA",
+    "MORS",
+    "AQUA",
+    "IGNIS",
     "VITA",
-    "MORS"
+    "UMBRA",
+    "TERRA"
 ];
 
 const magicIcons = {
@@ -87,7 +87,7 @@ const magicColors = {
 };
 
 let currentMagic = "IGNIS";
-let currentAffinity = 100;
+let currentMagicLevel = 10;
 
 
 /* ===================================== MODULES PRINCIPAUX =============================================== */
@@ -114,14 +114,14 @@ const primaryModules = [
     description: "Inflige des dégâts à une cible.",
 
     stats: {
-        IGNIS: { power: 600, cast: 1, cooldown: 5 },
-        AQUA:  { power: 450, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 950, cast: 1.5, cooldown: 8 },
-        AER:   { power: 100, cast: 0, cooldown: 1 },
-        LUX:   { power: 200, cast: 0, cooldown: 2 },
-        UMBRA: { power: 850, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 700, cast: 1, cooldown: 6 },
-        MORS:  { power: 350, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 60, cast: 1, cooldown: 5 },
+        AQUA:  { power: 45, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 95, cast: 1.5, cooldown: 8 },
+        AER:   { power: 10, cast: 0, cooldown: 1 },
+        LUX:   { power: 20, cast: 0, cooldown: 2 },
+        UMBRA: { power: 85, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 70, cast: 1, cooldown: 6 },
+        MORS:  { power: 35, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -144,14 +144,14 @@ const primaryModules = [
     description: "Inflige des dégâts progressivement, pendant une durée déterminée.",
 
     stats: {
-        IGNIS: { power: 900, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
-        AQUA:  { power: 800, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 1200, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
-        AER:   { power: 500, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
-        LUX:   { power: 600, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
-        UMBRA: { power: 1100, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 1000, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
-        MORS:  { power: 700, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 90, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 80, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 120, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 50, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 60, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 110, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 100, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 70, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -174,14 +174,14 @@ const primaryModules = [
     description: "Rend des points de vie.",
 
     stats: {
-        IGNIS: { power: 600, cast: 1, cooldown: 5 },
-        AQUA:  { power: 450, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 950, cast: 1.5, cooldown: 8 },
-        AER:   { power: 100, cast: 0, cooldown: 1 },
-        LUX:   { power: 200, cast: 0, cooldown: 2 },
-        UMBRA: { power: 850, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 700, cast: 1, cooldown: 6 },
-        MORS:  { power: 350, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 60, cast: 1, cooldown: 5 },
+        AQUA:  { power: 45, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 95, cast: 1.5, cooldown: 8 },
+        AER:   { power: 10, cast: 0, cooldown: 1 },
+        LUX:   { power: 20, cast: 0, cooldown: 2 },
+        UMBRA: { power: 85, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 70, cast: 1, cooldown: 6 },
+        MORS:  { power: 35, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -204,14 +204,14 @@ const primaryModules = [
     description: "Rend progressivement des points de vie pendant une durée déterminée.",
 
     stats: {
-        IGNIS: { power: 900, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
-        AQUA:  { power: 800, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 1200, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
-        AER:   { power: 500, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
-        LUX:   { power: 600, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
-        UMBRA: { power: 1100, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 1000, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
-        MORS:  { power: 700, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 90, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 80, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 120, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 50, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 60, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 110, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 100, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 70, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -234,14 +234,14 @@ const primaryModules = [
     description: "Applique un bouclier absorbant des dégâts.",
 
     stats: {
-        IGNIS: { power: 720, duration: 9, cast: 1, cooldown: 5 },
-        AQUA:  { power: 640, duration: 8, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 960, duration: 12, cast: 1.5, cooldown: 8 },
-        AER:   { power: 400, duration: 5, cast: 0, cooldown: 1 },
-        LUX:   { power: 480, duration: 6, cast: 0, cooldown: 2 },
-        UMBRA: { power: 880, duration: 11, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 800, duration: 10, cast: 1, cooldown: 6 },
-        MORS:  { power: 560, duration: 7, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 72, duration: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 64, duration: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 96, duration: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 40, duration: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 48, duration: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 88, duration: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 80, duration: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 56, duration: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -360,14 +360,14 @@ const secondaryModules = [
     description: "Ajoute des dégâts directs à la compétence.",
 
     stats: {
-        IGNIS: { power: 600, cast: 1, cooldown: 5 },
-        AQUA:  { power: 450, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 950, cast: 1.5, cooldown: 8 },
-        AER:   { power: 100, cast: 0, cooldown: 1 },
-        LUX:   { power: 200, cast: 0, cooldown: 2 },
-        UMBRA: { power: 850, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 700, cast: 1, cooldown: 6 },
-        MORS:  { power: 350, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 60, cast: 1, cooldown: 5 },
+        AQUA:  { power: 45, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 95, cast: 1.5, cooldown: 8 },
+        AER:   { power: 10, cast: 0, cooldown: 1 },
+        LUX:   { power: 20, cast: 0, cooldown: 2 },
+        UMBRA: { power: 85, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 70, cast: 1, cooldown: 6 },
+        MORS:  { power: 35, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -390,14 +390,14 @@ const secondaryModules = [
     description: "Ajoute des dégâts progressifs à la compétence.",
 
     stats: {
-        IGNIS: { power: 900, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
-        AQUA:  { power: 800, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 1200, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
-        AER:   { power: 500, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
-        LUX:   { power: 600, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
-        UMBRA: { power: 1100, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 1000, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
-        MORS:  { power: 700, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 90, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 80, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 120, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 50, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 60, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 110, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 100, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 70, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -420,14 +420,14 @@ const secondaryModules = [
     description: "Ajoute des soins directs à la compétence.",
 
     stats: {
-        IGNIS: { power: 600, cast: 1, cooldown: 5 },
-        AQUA:  { power: 450, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 950, cast: 1.5, cooldown: 8 },
-        AER:   { power: 100, cast: 0, cooldown: 1 },
-        LUX:   { power: 200, cast: 0, cooldown: 2 },
-        UMBRA: { power: 850, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 700, cast: 1, cooldown: 6 },
-        MORS:  { power: 350, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 60, cast: 1, cooldown: 5 },
+        AQUA:  { power: 45, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 95, cast: 1.5, cooldown: 8 },
+        AER:   { power: 10, cast: 0, cooldown: 1 },
+        LUX:   { power: 20, cast: 0, cooldown: 2 },
+        UMBRA: { power: 85, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 70, cast: 1, cooldown: 6 },
+        MORS:  { power: 35, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -450,14 +450,14 @@ const secondaryModules = [
     description: "Ajoute des soins progressifs à la compétence.",
 
     stats: {
-        IGNIS: { power: 900, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
-        AQUA:  { power: 800, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 1200, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
-        AER:   { power: 500, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
-        LUX:   { power: 600, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
-        UMBRA: { power: 1100, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 1000, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
-        MORS:  { power: 700, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 90, duration: 9, ticks: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 80, duration: 8, ticks: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 120, duration: 12, ticks: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 50, duration: 5, ticks: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 60, duration: 6, ticks: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 110, duration: 11, ticks: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 100, duration: 10, ticks: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 70, duration: 7, ticks: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
@@ -480,14 +480,14 @@ const secondaryModules = [
     description: "Ajoute un bouclier absorbant des dégâts à la compétence.",
 
     stats: {
-        IGNIS: { power: 720, duration: 9, cast: 1, cooldown: 5 },
-        AQUA:  { power: 640, duration: 8, cast: 0.5, cooldown: 4 },
-        TERRA: { power: 960, duration: 12, cast: 1.5, cooldown: 8 },
-        AER:   { power: 400, duration: 5, cast: 0, cooldown: 1 },
-        LUX:   { power: 480, duration: 6, cast: 0, cooldown: 2 },
-        UMBRA: { power: 880, duration: 11, cast: 1.5, cooldown: 7 },
-        VITA:  { power: 800, duration: 10, cast: 1, cooldown: 6 },
-        MORS:  { power: 560, duration: 7, cast: 0.5, cooldown: 3 }
+        IGNIS: { power: 72, duration: 9, cast: 1, cooldown: 5 },
+        AQUA:  { power: 64, duration: 8, cast: 0.5, cooldown: 4 },
+        TERRA: { power: 96, duration: 12, cast: 1.5, cooldown: 8 },
+        AER:   { power: 40, duration: 5, cast: 0, cooldown: 1 },
+        LUX:   { power: 48, duration: 6, cast: 0, cooldown: 2 },
+        UMBRA: { power: 88, duration: 11, cast: 1.5, cooldown: 7 },
+        VITA:  { power: 80, duration: 10, cast: 1, cooldown: 6 },
+        MORS:  { power: 56, duration: 7, cast: 0.5, cooldown: 3 }
     }
 },
 
