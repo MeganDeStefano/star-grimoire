@@ -54,6 +54,72 @@
 
         </section>
 
+        <section class="posture-control-section">
+
+            <div class="section-title">
+                Posture du personnage
+                <span class="prototype-note">Simulation uniquement</span>
+            </div>
+
+            <div class="posture-options">
+
+                <button
+                    type="button"
+                    class="posture-option active"
+                    id="postureNeutral"
+                    onclick="selectPosture('neutral')"
+                >
+                    Neutre
+                    <div class="tooltip">
+                        <strong>Neutre</strong>
+                        Aucun bonus de posture.
+                    </div>
+                </button>
+
+                <button
+                    type="button"
+                    class="posture-option"
+                    id="postureDefensive"
+                    onclick="selectPosture('defensive')"
+                >
+                    🛡️ Défensive
+                    <div class="tooltip">
+                        <strong>Posture défensive</strong>
+                        +50 % à toutes les Résistances élémentaires, dans la limite maximale de 50 %.
+                        Active également une aura agressive attirant les créatures hostiles.
+                    </div>
+                </button>
+
+                <button
+                    type="button"
+                    class="posture-option"
+                    id="postureOffensive"
+                    onclick="selectPosture('offensive')"
+                >
+                    ⚔️ Offensive
+                    <div class="tooltip">
+                        <strong>Posture offensive</strong>
+                        +50 % à la puissance de Percute et Dole.
+                    </div>
+                </button>
+
+                <button
+                    type="button"
+                    class="posture-option"
+                    id="postureAffective"
+                    onclick="selectPosture('affective')"
+                >
+                    ❤️ Affective
+                    <div class="tooltip">
+                        <strong>Posture affective</strong>
+                        +50 % à la puissance de Sana, Cura et Protege.
+                    </div>
+                </button>
+
+            </div>
+
+        </section>
+
         <section>
             <div class="section-title">
                 I — Module principal
