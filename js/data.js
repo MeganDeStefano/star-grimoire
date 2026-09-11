@@ -261,7 +261,7 @@ const primaryModules = [
         MORS: "images/sigils/mors-bonus.png"
     },
 
-    description: "Applique une amélioration temporaire augmentant l'Affinité de l'élément de la compétence.",
+    description: "Applique une amélioration temporaire augmentant la résistance de l'élément de la compétence.",
 
     stats: {
         IGNIS: { effect: 20, duration: 10, cast: 1, cooldown: 40 },
@@ -291,7 +291,7 @@ const primaryModules = [
         MORS: "images/sigils/mors-malus.png"
     },
 
-    description: "Applique un affaiblissement temporaire réduisant l'Affinité de l'élément de la compétence.",
+    description: "Applique un affaiblissement temporaire réduisant la résistance de l'élément de la compétence.",
 
     stats: {
         IGNIS: { effect: -20, duration: 10, cast: 1, cooldown: 40 },
@@ -507,7 +507,7 @@ const secondaryModules = [
         MORS: "images/sigils/mors-bonus.png"
     },
 
-    description: "Ajoute une amélioration temporaire augmentant l'Affinité de l'élément de la compétence.",
+    description: "Ajoute une amélioration temporaire augmentant la résistance de l'élément de la compétence.",
 
     stats: {
         IGNIS: { effect: 20, duration: 10, cast: 1, cooldown: 40 },
@@ -537,7 +537,7 @@ const secondaryModules = [
         MORS: "images/sigils/mors-malus.png"
     },
 
-    description: "Ajoute un affaiblissement temporaire réduisant l'Affinité de l'élément de la compétence.",
+    description: "Ajoute un affaiblissement temporaire réduisant la résistance de l'élément de la compétence.",
 
     stats: {
         IGNIS: { effect: -20, duration: 10, cast: 1, cooldown: 40 },
